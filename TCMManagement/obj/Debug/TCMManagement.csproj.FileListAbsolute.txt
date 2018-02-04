@@ -1,0 +1,17 @@
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\bin\TCMManagement.dll.config
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\bin\TCMManagement.dll
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\bin\TCMManagement.pdb
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\bin\Newtonsoft.Json.dll
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\bin\System.Net.Http.Formatting.dll
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\bin\System.Web.Http.dll
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\bin\System.Web.Http.WebHost.dll
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\bin\Newtonsoft.Json.xml
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\bin\System.Net.Http.Formatting.xml
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\bin\System.Web.Http.xml
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\bin\System.Web.Http.WebHost.xml
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\obj\Debug\TCMManagement.csprojResolveAssemblyReference.cache
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\obj\Debug\TCMManagement.csproj.CoreCompileInputs.cache
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\obj\Debug\TCMManagement.dll
+C:\Users\shaohua\source\repos\TCMManagement\TCMManagement\obj\Debug\TCMManagement.pdb

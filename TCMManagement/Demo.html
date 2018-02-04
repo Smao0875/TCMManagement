@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Patients List</title>
+</head>
+<body>
+
+    <div>
+        <h2>All Patients</h2>
+        <ul id="patients" />
+    </div>
+    <div>
+        <h2>Search by ID</h2>
+        <input type="text" id="patientId" size="5" />
+        <input type="button" value="Search" onclick="find();" />
+        <p id="patient" />
+    </div>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+    var uri = 'api/patient';
+
+    $(document).ready(function () {
+      // Send an AJAX request
+      $.getJSON(uri)
+          .done(function (data) {
+            // On success, 'data' contains a list of products.
+            $.each(data, function (key, item) {
+              // Add a list item for the product.
+                $('<li>', { text: formatItem(item) }).appendTo($('#patients'));
+            });
+          });
+    });
+
+    function formatItem(item) {
+      return item.FirstName + ': $' + item.LastName;
+    }
+
+    function find() {
+        var id = $('#patientId').val();
+      $.getJSON(uri + '/' + id)
+          .done(function (data) {
+              $('#patient').text(formatItem(data));
+          })
+          .fail(function (jqXHR, textStatus, err) {
+              $('#patient').text('Error: ' + err);
+          });
+    }
+    </script>
+</body>
+</html>
