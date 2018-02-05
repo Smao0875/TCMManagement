@@ -44,6 +44,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -83,15 +89,38 @@
   <ItemGroup>
     <Content Include="Demo.html" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\PatientController.cs" />
+    <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="DataAccessLayer\TcmDAL.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802041820026_InitialCreate.cs" />
+    <Compile Include="Migrations\201802041820026_InitialCreate.Designer.cs">
+      <DependentUpon>201802041820026_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802042035050_initial.cs" />
+    <Compile Include="Migrations\201802042035050_initial.Designer.cs">
+      <DependentUpon>201802042035050_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802042102113_what.cs" />
+    <Compile Include="Migrations\201802042102113_what.Designer.cs">
+      <DependentUpon>201802042102113_what.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802042348597_Seperate patients from person table.cs" />
+    <Compile Include="Migrations\201802042348597_Seperate patients from person table.Designer.cs">
+      <DependentUpon>201802042348597_Seperate patients from person table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\Patient.cs" />
+    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +134,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201802041820026_InitialCreate.resx">
+      <DependentUpon>201802041820026_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802042035050_initial.resx">
+      <DependentUpon>201802042035050_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802042102113_what.resx">
+      <DependentUpon>201802042102113_what.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802042348597_Seperate patients from person table.resx">
+      <DependentUpon>201802042348597_Seperate patients from person table.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
