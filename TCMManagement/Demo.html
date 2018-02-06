@@ -12,7 +12,13 @@
     <div>
         <h2>Search by ID</h2>
         <input type="text" id="patientId" size="5" />
-        <input type="button" value="Search" onclick="find();" />
+        <input type="button" value="Search" onclick="find();" /><br />
+        <input type="text" id="FirstName" /><a>FirstName</a><br />
+        <input type="text" id="LastName" /><a>LastName</a><br />
+        <input type="text" id="Email" /><a>Email</a><br />
+        <input type="text" id="Gender" /><a>Gender</a><br />
+        <input type="button" value="Edit" onclick="edit();" /><br />
+        <input type="text" id="Result"/><a>Result</a><br />
         <p id="patient" />
     </div>
 
@@ -45,6 +51,23 @@
           .fail(function (jqXHR, textStatus, err) {
               $('#patient').text('Error: ' + err);
           });
+        }
+
+        function edit() {
+            $.ajax({
+                url: uri,
+                type: 'PUT',
+                data: {
+                    PersonId: 1,
+                    FirstName: $('#FirstName').val(),
+                    LastName: $('#LastName').val(),
+                    Email: $('#Email').val(),
+                    Gender: $('#Gender').val(),
+                },
+                success: function (result) {
+                    $('#Result').text(result);
+                }
+            });
     }
     </script>
 </body>
