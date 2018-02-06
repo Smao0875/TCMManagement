@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using TCMManagement.BusinessLayer;
 using TCMManagement.DataAccessLayer;
 using TCMManagement.Models;
 
@@ -14,23 +15,21 @@ namespace TCMManagement.Controllers
         [HttpPost]
         public IHttpActionResult AddPerson(Person p)
         {
-            TcmDAL dal = new TcmDAL();
-            dal.People.Add(p);
-            dal.SaveChanges();
-            return Ok();
+            PersonBusinessLayer bl = new PersonBusinessLayer();
+            return Ok(bl.AddPerson(p));
         }
 
         public IEnumerable<Person> GetAllPersons()
         {
-            TcmDAL dal = new TcmDAL();
-            return dal.People.ToList();
+            PersonBusinessLayer bl = new PersonBusinessLayer();
+            return bl.GetPeople();
         }
 
         [HttpGet]
         public IHttpActionResult GetPerson(int id)
         {
-            TcmDAL dal = new TcmDAL();
-            var person = dal.People.FirstOrDefault((p) => p.PersonId == id);
+            PersonBusinessLayer bl = new PersonBusinessLayer();
+            var person = bl.GetPersonById(id);
             if (person == null)
             {
                 return NotFound();
@@ -39,23 +38,29 @@ namespace TCMManagement.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult EditPerson(Person per)
+        public IHttpActionResult EditPerson(Person p)
         {
-            TcmDAL dal = new TcmDAL();
-            var person = dal.People.FirstOrDefault((p) => p.PersonId == 1);
-            if (person == null)
+            PersonBusinessLayer bl = new PersonBusinessLayer();
+            int id = bl.UpdatePerson(p);
+            if (id == 0)
             {
                 return NotFound();
             }
             else
             {
-                person.LastName = per.LastName;
-                person.FirstName = per.FirstName;
-                person.Email = per.Email;
-                person.Gender = per.Gender;
-                dal.SaveChanges();
+                return Ok(id);
+            }
+        }
+
+        [HttpDelete]
+        public IHttpActionResult DeletePerson(int id)
+        {
+            PersonBusinessLayer bl = new PersonBusinessLayer();
+            if(bl.DeletePerson(id))
+            {
                 return Ok();
             }
+            return NotFound();
         }
     }
 }
