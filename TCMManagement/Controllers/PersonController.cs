@@ -12,6 +12,7 @@ namespace TCMManagement.Controllers
     /// </summary>
     public class PersonController : ApiController
     {
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IHttpActionResult AddPerson(Person p)
         {
@@ -37,6 +38,7 @@ namespace TCMManagement.Controllers
             return Ok(person);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut]
         public IHttpActionResult EditPerson(Person p)
         {
@@ -52,6 +54,7 @@ namespace TCMManagement.Controllers
             }
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete]
         public IHttpActionResult DeletePerson(int id)
         {

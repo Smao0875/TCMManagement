@@ -33,7 +33,7 @@ namespace TCMManagement.BusinessLayer
         public int UpdatePerson(Person p)
         {
             TcmDAL dal = new TcmDAL();
-            var person = dal.People.FirstOrDefault((x) => x.PersonId == p.PersonId);
+            var person = dal.People.FirstOrDefault((x) => x.PersonId == 1);
             if (person == null)
             {
                 return 0;
