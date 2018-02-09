@@ -1,12 +1,10 @@
 namespace TCMManagement.Migrations
 {
     using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
     using TCMManagement.Models;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<TCMManagement.DataAccessLayer.TcmDAL>
+    internal sealed class Configuration : DbMigrationsConfiguration<TcmEntities>
     {
         public Configuration()
         {
@@ -14,13 +12,13 @@ namespace TCMManagement.Migrations
             ContextKey = "TCMManagement.DataAccessLayer.TcmDAL";
         }
 
-        protected override void Seed(TCMManagement.DataAccessLayer.TcmDAL context)
+        protected override void Seed(TcmEntities context)
         {
             context.Roles.AddOrUpdate(x => x.UserRoleId,
                 new UserRole() { UserRoleId = 1, Role = 1, Description = "Patient", DateCreated = DateTime.Now },
                 new UserRole() { UserRoleId = 2, Role = 2, Description = "Practitioner", DateCreated = DateTime.Now },
                 new UserRole() { UserRoleId = 3, Role = 3, Description = "Receptionist", DateCreated = DateTime.Now },
-                new UserRole() { UserRoleId = 4, Role = 4, Description = "Admin", DateCreated = DateTime.Now }
+                new UserRole() { UserRoleId = 4, Role = 4, Description = "admin", DateCreated = DateTime.Now }
             );
 
             context.People.AddOrUpdate(x => x.PersonId,
@@ -29,7 +27,7 @@ namespace TCMManagement.Migrations
                 new Person() { PersonId = 3, UserRoleId = 2, FirstName = "Practitioner", LastName = "1" },
                 new Person() { PersonId = 4, UserRoleId = 2, FirstName = "Practitioner", LastName = "2" },
                 new Person() { PersonId = 5, UserRoleId = 3, FirstName = "Receptionist", LastName = "1" },
-                new Person() { PersonId = 6, UserRoleId = 4, FirstName = "Admin", LastName = "1" }
+                new Person() { PersonId = 6, UserRoleId = 4, FirstName = "Admin", LastName = "1" , Email = "email"}
             );
 
             context.Patients.AddOrUpdate(x => x.PatientId,

@@ -1,10 +1,8 @@
 ﻿using Microsoft.Owin.Security.OAuth;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
+using TCMManagement.BusinessLayer;
+using TCMManagement.Models;
 
 namespace TCMManagement
 {
@@ -18,24 +16,23 @@ namespace TCMManagement
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-            // check user email and password here, also need to get user role.
-            if (context.UserName == "admin" && context.Password == "admin")
+            IEntityServices<Person> service = new PersonService();
+            Person person = service.SearchItemByName(context.UserName);
+
+            if(person == null)
             {
-                identity.AddClaim(new Claim(ClaimTypes.Role, "admin"));
-                identity.AddClaim(new Claim("username", "admin"));
-                identity.AddClaim(new Claim(ClaimTypes.Name, "Tom"));
-                context.Validated(identity);
+                context.SetError("invalid grant", "provide username and password");
             }
-            else if (context.UserName == "user" && context.Password == "user")
+            else if(!context.Password.Equals(person.Password))
             {
-                identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
-                identity.AddClaim(new Claim("username", "user"));
-                identity.AddClaim(new Claim(ClaimTypes.Name, "Jimmy"));
-                context.Validated(identity);
+                context.SetError("invalid grant", "Invalid password");
             }
             else
             {
-                context.SetError("invalid grant", "provide username and password");
+                identity.AddClaim(new Claim(ClaimTypes.Role, person.Role.Description));
+                identity.AddClaim(new Claim("username", person.Email));
+                identity.AddClaim(new Claim(ClaimTypes.Name, person.FirstName + " " + person.LastName));
+                context.Validated(identity);
             }
         }
     }

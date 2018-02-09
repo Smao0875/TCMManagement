@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Http;
 using TCMManagement.BusinessLayer;
-using TCMManagement.DataAccessLayer;
 using TCMManagement.Models;
 
 namespace TCMManagement.Controllers
@@ -12,25 +11,29 @@ namespace TCMManagement.Controllers
     /// </summary>
     public class PersonController : ApiController
     {
+        private readonly IEntityServices<Person> personService;
+
+        public PersonController()
+        {
+            personService = new PersonService();
+        }
+
         [Authorize(Roles = "admin")]
         [HttpPost]
         public IHttpActionResult AddPerson(Person p)
         {
-            PersonBusinessLayer bl = new PersonBusinessLayer();
-            return Ok(bl.AddPerson(p));
+            return Ok(personService.CreateItem(p));
         }
 
         public IEnumerable<Person> GetAllPersons()
         {
-            PersonBusinessLayer bl = new PersonBusinessLayer();
-            return bl.GetPeople();
+            return personService.GetAllItems();
         }
 
         [HttpGet]
         public IHttpActionResult GetPerson(int id)
         {
-            PersonBusinessLayer bl = new PersonBusinessLayer();
-            var person = bl.GetPersonById(id);
+            var person = personService.GetItemById(id);
             if (person == null)
             {
                 return NotFound();
@@ -40,26 +43,17 @@ namespace TCMManagement.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPut]
-        public IHttpActionResult EditPerson(Person p)
+        public IHttpActionResult EditPerson(int id, Person p)
         {
-            PersonBusinessLayer bl = new PersonBusinessLayer();
-            int id = bl.UpdatePerson(p);
-            if (id == 0)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return Ok(id);
-            }
+            personService.UpdateItem(id, p);
+            return Ok(id);
         }
 
         [Authorize(Roles = "admin")]
         [HttpDelete]
         public IHttpActionResult DeletePerson(int id)
         {
-            PersonBusinessLayer bl = new PersonBusinessLayer();
-            if(bl.DeletePerson(id))
+            if(personService.DeleteItem(id))
             {
                 return Ok();
             }
