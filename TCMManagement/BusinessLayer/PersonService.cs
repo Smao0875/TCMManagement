@@ -7,41 +7,40 @@ namespace TCMManagement.BusinessLayer
 {
     public class PersonService : IEntityServices<Person>
     {
-        private readonly TcmEntities dal;
+        private TcmContext context;
 
         public PersonService()
         {
-            dal = new TcmEntities();
+            context = new TcmContext();
         }
 
-        public int CreateItem(Person p)
+        public Person CreateItem(Person p)
         {
-            dal.People.Add(p);
-            dal.SaveChanges();
-            return dal.People.Last().PersonId;
+            context.People.Add(p);
+            context.SaveChanges();
+            return context.People.Last();
         }
 
         public IEnumerable<Person> GetAllItems()
         {
-            return dal.People.ToList();
+            return context.People.ToList();
         }
 
         public Person GetItemById(int id)
         {
-            return dal.People
-                      .FirstOrDefault(p => p.PersonId == id);
+            return context.People.FirstOrDefault(p => p.PersonId == id);
         }
 
         public Person SearchItemByName(string s)
         {
-            return dal.People
+            return context.People
                       .Include(e => e.Role)
                       .FirstOrDefault(p => p.Email == s);
         }
 
         public bool UpdateItem(int id, Person p)
         {
-            var person = dal.People.FirstOrDefault((x) => x.PersonId == 1);
+            var person = context.People.FirstOrDefault((x) => x.PersonId == 1);
             if (person == null)
             {
                 return false;
@@ -52,20 +51,35 @@ namespace TCMManagement.BusinessLayer
                 person.FirstName = p.FirstName;
                 person.Email = p.Email;
                 person.Gender = p.Gender;
-                dal.SaveChanges();
+                SaveChanges();
                 return true;
             }
         }
 
         public bool DeleteItem(int id)
         {
-            Person p = dal.People.Find(id);
+            Person p = context.People.Find(id);
             if (p == null)
             {
                 return false;
             }
-            dal.People.Remove(p);
+            context.People.Remove(p);
             return true;
+        }
+
+        public void MarkAsModified(Person item)
+        {
+            context.Entry(item).State = EntityState.Modified;
+        }
+
+        public int SaveChanges()
+        {
+            return context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            context.Dispose();
         }
     }
 }

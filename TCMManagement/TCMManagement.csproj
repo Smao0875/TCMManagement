@@ -120,29 +120,13 @@
     <Compile Include="BusinessLayer\IEntityServices.cs" />
     <Compile Include="BusinessLayer\PersonService.cs" />
     <Compile Include="Controllers\PersonController.cs" />
-    <Compile Include="Migrations\201802090241090_AddPasswordColumn.cs" />
-    <Compile Include="Migrations\201802090241090_AddPasswordColumn.Designer.cs">
-      <DependentUpon>201802090241090_AddPasswordColumn.cs</DependentUpon>
+    <Compile Include="Migrations\201802102007409_Initial.cs" />
+    <Compile Include="Migrations\201802102007409_Initial.Designer.cs">
+      <DependentUpon>201802102007409_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\TcmEntities.cs" />
+    <Compile Include="Models\TcmContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802041820026_InitialCreate.cs" />
-    <Compile Include="Migrations\201802041820026_InitialCreate.Designer.cs">
-      <DependentUpon>201802041820026_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802042035050_initial.cs" />
-    <Compile Include="Migrations\201802042035050_initial.Designer.cs">
-      <DependentUpon>201802042035050_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802042102113_what.cs" />
-    <Compile Include="Migrations\201802042102113_what.Designer.cs">
-      <DependentUpon>201802042102113_what.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802042348597_Seperate patients from person table.cs" />
-    <Compile Include="Migrations\201802042348597_Seperate patients from person table.Designer.cs">
-      <DependentUpon>201802042348597_Seperate patients from person table.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Appointment.cs" />
@@ -168,20 +152,8 @@
     <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201802041820026_InitialCreate.resx">
-      <DependentUpon>201802041820026_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802042035050_initial.resx">
-      <DependentUpon>201802042035050_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802042102113_what.resx">
-      <DependentUpon>201802042102113_what.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802042348597_Seperate patients from person table.resx">
-      <DependentUpon>201802042348597_Seperate patients from person table.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802090241090_AddPasswordColumn.resx">
-      <DependentUpon>201802090241090_AddPasswordColumn.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201802102007409_Initial.resx">
+      <DependentUpon>201802102007409_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace TCMManagement.Models
 {
@@ -17,7 +13,5 @@ namespace TCMManagement.Models
 
         public int PersonId { get; set; }
         public Person Person { get; set; }
-
-        public ICollection<Appointment> Schedule { get; set; }
     }
 }

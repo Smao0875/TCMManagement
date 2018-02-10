@@ -4,15 +4,15 @@ namespace TCMManagement.Migrations
     using System.Data.Entity.Migrations;
     using TCMManagement.Models;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<TcmEntities>
+    internal sealed class Configuration : DbMigrationsConfiguration<TcmContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "TCMManagement.DataAccessLayer.TcmDAL";
+            ContextKey = "TCMManagement.Models.TcmContext";
         }
 
-        protected override void Seed(TcmEntities context)
+        protected override void Seed(TcmContext context)
         {
             context.Roles.AddOrUpdate(x => x.UserRoleId,
                 new UserRole() { UserRoleId = 1, Role = 1, Description = "Patient", DateCreated = DateTime.Now },

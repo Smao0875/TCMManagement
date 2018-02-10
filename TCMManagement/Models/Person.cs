@@ -18,8 +18,5 @@ namespace TCMManagement.Models
 
         public int UserRoleId { get; set; }
         public UserRole Role { get; set; }
-
-        public ICollection<Appointment> Schedule { get; set; }
-        public ICollection<Patient> Patients { get; set; }
     }
 }

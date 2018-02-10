@@ -2,7 +2,7 @@
 
 namespace TCMManagement.Models
 {
-    public class TcmEntities : DbContext
+    public class TcmContext : DbContext
     {
         public DbSet<Person> People { get; set; }
         public DbSet<UserRole> Roles { get; set; }

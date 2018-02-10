@@ -14,11 +14,5 @@ namespace TCMManagement.Models
         public DateTime TimeEnd { get; set; }
         public DateTime DateCreated { get; set; }
         public string Description { get; set; }
-
-
-        public int PatientId { get; set; }
-        public int PersonId { get; set; }
-        public Patient Patient { get; set; }
-        public Person Practitioner { get; set; }
     }
 }
