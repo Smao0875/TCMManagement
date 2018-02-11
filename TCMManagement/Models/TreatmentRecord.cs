@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace TCMManagement.Models
 {
-    public class Appointment
+    public class TreatmentRecord
     {
         [Key]
-        public int AppointmentId { get; set; }
-        public DateTime TimeStart { get; set; }
-        public DateTime TimeEnd { get; set; }
+        public int TreatmentRecordId { get; set; }
         public DateTime DateCreated { get; set; }
-        public string Description { get; set; }
+        public string Symptom { get; set; }
+        public string Diagnosis { get; set; }
+        public int PrescriptionID { get; set; }
 
         public int PersonId { get; set; }
         public Person Person { get; set; }

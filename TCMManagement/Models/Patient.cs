@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TCMManagement.Models
 {
@@ -13,5 +14,9 @@ namespace TCMManagement.Models
 
         public int PersonId { get; set; }
         public Person Person { get; set; }
+
+        public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<TreatmentRecord> TreatmentRecords { get; set; }
+        public ICollection<MedicalHistoryRecord> MedicalHistoryRecords { get; set; }
     }
 }

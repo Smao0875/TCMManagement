@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,5 +19,8 @@ namespace TCMManagement.Models
 
         public int UserRoleId { get; set; }
         public UserRole Role { get; set; }
+
+        public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<TreatmentRecord> TreatmentRecords { get; set; }
     }
 }

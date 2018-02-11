@@ -98,9 +98,9 @@
   <ItemGroup>
     <Compile Include="TestDbSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestPersonDbSet.cs" />
-    <Compile Include="TestPersonService.cs" />
-    <Compile Include="TestPersonController.cs" />
+    <Compile Include="TestPersonController\TestPersonDbSet.cs" />
+    <Compile Include="TestPersonController\TestPersonService.cs" />
+    <Compile Include="TestPersonController\TestPersonController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

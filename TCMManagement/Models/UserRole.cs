@@ -9,7 +9,6 @@ namespace TCMManagement.Models
         [Key]
         public int UserRoleId { get; set; }
         public int Role { get; set; }
-        public DateTime DateCreated { get; set; }
         public string Description { get; set; }
 
         public ICollection<Person> People { get; set; }
