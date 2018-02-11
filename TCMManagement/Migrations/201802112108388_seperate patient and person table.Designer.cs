@@ -7,13 +7,13 @@ namespace TCMManagement.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class addtreatmentandmedicalHistorytable : IMigrationMetadata
+    public sealed partial class seperatepatientandpersontable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addtreatmentandmedicalHistorytable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(seperatepatientandpersontable));
         
         string IMigrationMetadata.Id
         {
-            get { return "201802110153435_add treatment and medicalHistory table"; }
+            get { return "201802112108388_seperate patient and person table"; }
         }
         
         string IMigrationMetadata.Source

@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TCMManagement.BusinessLayer;
+using static TCMManagement.BusinessLayer.Constants;
 using TCMManagement.Models;
 
 namespace TCMManagement
@@ -17,7 +18,7 @@ namespace TCMManagement
         {
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             IEntityServices<Person> service = new PersonService();
-            Person person = service.SearchItemByName(context.UserName);
+            Person person = service.SearchItem(context.UserName, Include.Role);
 
             if(person == null)
             {

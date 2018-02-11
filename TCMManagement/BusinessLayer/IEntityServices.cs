@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using static TCMManagement.BusinessLayer.Constants;
 
 namespace TCMManagement.BusinessLayer
 {
@@ -7,8 +8,8 @@ namespace TCMManagement.BusinessLayer
         where T : class
     {
         T CreateItem(T item);
-        T GetItemById(int id);
-        T SearchItemByName(string s);
+        T GetItemById(int id, Include include);
+        T SearchItem(string s, Include include);
         IEnumerable<T> GetAllItems();
         bool UpdateItem(int id, T item);
         bool DeleteItem(int id);

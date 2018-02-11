@@ -10,7 +10,5 @@ namespace TCMManagement.Models
         public int UserRoleId { get; set; }
         public int Role { get; set; }
         public string Description { get; set; }
-
-        public ICollection<Person> People { get; set; }
     }
 }

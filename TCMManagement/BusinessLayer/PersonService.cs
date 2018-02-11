@@ -2,6 +2,7 @@
 using System.Linq;
 using TCMManagement.Models;
 using System.Data.Entity;
+using static TCMManagement.BusinessLayer.Constants;
 
 namespace TCMManagement.BusinessLayer
 {
@@ -26,12 +27,30 @@ namespace TCMManagement.BusinessLayer
             return context.People.ToList();
         }
 
-        public Person GetItemById(int id)
+        public Person GetItemById(int id, Include include)
         {
-            return context.People.FirstOrDefault(p => p.PersonId == id);
+            switch (include)
+            {
+                case Include.None:
+                    return context.People.FirstOrDefault(p => p.PersonId == id);
+                case Include.Appointment:
+                    return context.People
+                                  .Include(e => e.Appointments)
+                                  .FirstOrDefault(p => p.PersonId == id);
+                case Include.MedicalRecord:
+                    return context.People
+                                  .Include(e => e.TreatmentRecords)
+                                  .FirstOrDefault(p => p.PersonId == id);
+                case Include.Role:
+                    return context.People
+                                  .Include(e => e.Role)
+                                  .FirstOrDefault(p => p.PersonId == id);
+                default:
+                    return null;
+            }
         }
 
-        public Person SearchItemByName(string s)
+        public Person SearchItem(string s, Include include)
         {
             return context.People
                       .Include(e => e.Role)

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Http;
 using TCMManagement.BusinessLayer;
 using TCMManagement.Models;
+using static TCMManagement.BusinessLayer.Constants;
 
 namespace TCMManagement.Controllers
 {
@@ -36,9 +37,10 @@ namespace TCMManagement.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetPerson(int id)
+        [Route("api/person/{id}/{include}")]
+        public IHttpActionResult GetPerson(int id, int include = (int)Include.None)
         {
-            var person = personService.GetItemById(id);
+            var person = personService.GetItemById(id, (Include)include);
             if (person == null)
             {
                 return NotFound();
