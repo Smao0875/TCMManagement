@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+using System.Runtime.Serialization;
 
 namespace TCMManagement.Models
 {
+    [Serializable]
+    [DataContract(IsReference = true)]
     public class TreatmentRecord
     {
         [Key]
