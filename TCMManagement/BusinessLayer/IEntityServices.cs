@@ -10,7 +10,7 @@ namespace TCMManagement.BusinessLayer
         T CreateItem(T item);
         T GetItemById(int id, Include include);
         T SearchItem(string s, Include include);
-        IEnumerable<T> GetAllItems();
+        IEnumerable<T> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams);
         bool UpdateItem(int id, T item);
         bool DeleteItem(int id);
 

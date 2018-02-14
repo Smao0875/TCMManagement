@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TCMManagement.BusinessLayer;
 using TCMManagement.Models;
+using static TCMManagement.BusinessLayer.Constants;
 
 namespace TCMManagement.Test
 {
@@ -24,12 +25,12 @@ namespace TCMManagement.Test
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Person> GetAllItems()
+        public IEnumerable<Person> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
             throw new NotImplementedException();
         }
 
-        public Person GetItemById(int id)
+        public Person GetItemById(int id, Include include)
         {
             return context.Find(id);
         }
@@ -50,6 +51,11 @@ namespace TCMManagement.Test
         }
 
         public bool UpdateItem(int id, Person item)
+        {
+            throw new NotImplementedException();
+        }
+        
+        Person IEntityServices<Person>.SearchItem(string s, Include include)
         {
             throw new NotImplementedException();
         }

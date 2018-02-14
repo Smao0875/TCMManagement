@@ -3,6 +3,7 @@ using System.Linq;
 using TCMManagement.Models;
 using System.Data.Entity;
 using static TCMManagement.BusinessLayer.Constants;
+using TCMManagement.BusinessLayer;
 
 namespace TCMManagement.BusinessLayer
 {
@@ -17,14 +18,23 @@ namespace TCMManagement.BusinessLayer
 
         public Person CreateItem(Person p)
         {
+            if(SearchItem(p.Email) != null)
+                return null;
+
             context.People.Add(p);
-            context.SaveChanges();
+            SaveChanges();
             return context.People.Last();
         }
 
-        public IEnumerable<Person> GetAllItems()
+        public IEnumerable<Person> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            return context.People.ToList();
+            if(!Utils.IsNullOrEmpty(queryParams)){
+                return context.People
+                            .Include(p => p.Role)
+                            .Where(e => e.Role.Description == queryParams.First().Value)
+                            .ToList();
+            }
+            return context.People.Include(p => p.Role).ToList();
         }
 
         public Person GetItemById(int id, Include include)
@@ -50,7 +60,7 @@ namespace TCMManagement.BusinessLayer
             }
         }
 
-        public Person SearchItem(string s, Include include)
+        public Person SearchItem(string s, Include include = Include.None)
         {
             return context.People
                       .Include(e => e.Role)
@@ -66,7 +76,9 @@ namespace TCMManagement.BusinessLayer
             }
             else
             {
-                person.LastName = p.LastName;
+                // https://stackoverflow.com/questions/10324615/partial-update-with-asp-net-web-api
+                // use automapper later.
+                if(p.FirstName != null) person.LastName = p.LastName;
                 person.FirstName = p.FirstName;
                 person.Email = p.Email;
                 person.Gender = p.Gender;
@@ -83,6 +95,7 @@ namespace TCMManagement.BusinessLayer
                 return false;
             }
             context.People.Remove(p);
+            SaveChanges();
             return true;
         }
 
@@ -93,6 +106,7 @@ namespace TCMManagement.BusinessLayer
 
         public int SaveChanges()
         {
+            Utils.SoftDeleteEntry(context);
             return context.SaveChanges();
         }
 

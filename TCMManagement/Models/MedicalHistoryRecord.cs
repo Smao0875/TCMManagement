@@ -14,6 +14,8 @@ namespace TCMManagement.Models
         public string Dosage { get; set; }
         public bool IsFamily { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public int PatientId { get; set; }
         public Patient Patient { get; set; }
     }

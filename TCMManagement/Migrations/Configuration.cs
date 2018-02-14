@@ -57,12 +57,14 @@ namespace TCMManagement.Migrations
             );
 
             context.MedicalHistoryRecords.AddOrUpdate(
-                new MedicalHistoryRecord() { MedicalHistoryRecordId = 1, PatientId = 1, Description = "Too much fire", DateCreated = DateTime.Now},
-                new MedicalHistoryRecord() { MedicalHistoryRecordId = 2, PatientId = 2, Description = "Too much water", DateCreated = DateTime.Now },
-                new MedicalHistoryRecord() { MedicalHistoryRecordId = 3, PatientId = 1, Description = "Too much wood" , DateCreated = DateTime.Now },
-                new MedicalHistoryRecord() { MedicalHistoryRecordId = 4, PatientId = 2, Description = "Too much metal" , DateCreated = DateTime.Now },
-                new MedicalHistoryRecord() { MedicalHistoryRecordId = 5, PatientId = 1, Description = "Too much soil" , DateCreated = DateTime.Now },
-                new MedicalHistoryRecord() { MedicalHistoryRecordId = 6, PatientId = 2, Description = "Too much nothing", DateCreated = DateTime.Now }
+                new MedicalHistoryRecord() { MedicalHistoryRecordId = 1, PatientId = 1, Description = "Too much fire", DateCreated = DateTime.Now, IsFamily = false},
+                new MedicalHistoryRecord() { MedicalHistoryRecordId = 2, PatientId = 2, Description = "Too much water", DateCreated = DateTime.Now , IsFamily = false},
+                new MedicalHistoryRecord() { MedicalHistoryRecordId = 3, PatientId = 1, Description = "Too much wood" , DateCreated = DateTime.Now , IsFamily = false},
+                new MedicalHistoryRecord() { MedicalHistoryRecordId = 4, PatientId = 2, Description = "Too much metal" , DateCreated = DateTime.Now , IsFamily = false},
+                new MedicalHistoryRecord() { MedicalHistoryRecordId = 5, PatientId = 1, Description = "Too much soil" , DateCreated = DateTime.Now, IsFamily = false},
+                new MedicalHistoryRecord() { MedicalHistoryRecordId = 6, PatientId = 2, Description = "Too much nothing", DateCreated = DateTime.Now, IsFamily = false},
+                new MedicalHistoryRecord() { MedicalHistoryRecordId = 7, PatientId = 1, Description = "Too much soil" , DateCreated = DateTime.Now, IsFamily = true},
+                new MedicalHistoryRecord() { MedicalHistoryRecordId = 8, PatientId = 2, Description = "Too much nothing", DateCreated = DateTime.Now, IsFamily = true}
             );
         }
     }

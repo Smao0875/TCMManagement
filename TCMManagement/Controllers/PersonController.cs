@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Net.Http;
 using TCMManagement.BusinessLayer;
 using TCMManagement.Models;
 using static TCMManagement.BusinessLayer.Constants;
+using System.Net;
 
 namespace TCMManagement.Controllers
 {
@@ -28,12 +30,19 @@ namespace TCMManagement.Controllers
         [HttpPost]
         public IHttpActionResult AddPerson(Person p)
         {
+            Person person = personService.CreateItem(p);
+            if(person == null)
+                return Conflict(); // "This email is already taken by others."
+
             return Ok(personService.CreateItem(p));
         }
 
+        // querystring = "?type=practitioner"
+        [HttpGet]
         public IEnumerable<Person> GetAllPersons()
         {
-            return personService.GetAllItems();
+            var keyValuePairs = ControllerContext.Request.GetQueryNameValuePairs();
+            return personService.GetItems(keyValuePairs);
         }
 
         [HttpGet]
@@ -49,7 +58,7 @@ namespace TCMManagement.Controllers
         }
 
         // Comment our for now, easier to test
-        //[Authorize(Roles = "admin")]
+        // [Authorize(Roles = "admin")]
         [HttpPut]
         public IHttpActionResult EditPerson(int id, Person p)
         {

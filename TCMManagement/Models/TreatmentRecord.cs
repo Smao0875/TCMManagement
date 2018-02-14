@@ -14,6 +14,7 @@ namespace TCMManagement.Models
         public string Symptom { get; set; }
         public string Diagnosis { get; set; }
         public int PrescriptionID { get; set; }
+        public bool IsDeleted { get; set; }
 
         public int PersonId { get; set; }
         public Person Person { get; set; }

@@ -20,6 +20,7 @@ namespace TCMManagement.Models
         public string EmergencyContactName { get; set; }
         public string EmergencyContactPhone { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public bool IsDeleted { get; set; }
 
         public int UserRoleId { get; set; }
         public UserRole Role { get; set; }
