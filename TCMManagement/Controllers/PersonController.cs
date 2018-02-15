@@ -6,6 +6,7 @@ using TCMManagement.BusinessLayer;
 using TCMManagement.Models;
 using static TCMManagement.BusinessLayer.Constants;
 using System.Net;
+using AutoMapper;
 
 namespace TCMManagement.Controllers
 {
@@ -14,27 +15,25 @@ namespace TCMManagement.Controllers
     /// </summary>
     public class PersonController : ApiController
     {
-        private IEntityServices<Person> personService;
+        private readonly IEntityServices<Person> personService;
+        private readonly IMapper mapper;
 
-        public PersonController() {
-            personService = new PersonService();
-        }
-
-        public PersonController(IEntityServices<Person> service)
+        public PersonController(IEntityServices<Person> service, IMapper m)
         {
             personService = service;
+            mapper = m;
         }
 
         // Comment our for now, easier to test
         //[Authorize(Roles = "admin")]
         [HttpPost]
-        public IHttpActionResult AddPerson(Person p)
+        public IHttpActionResult AddPerson(PersonCreation p)
         {
-            Person person = personService.CreateItem(p);
+            Person person = personService.CreateItem(mapper.Map<Person>(p));
             if(person == null)
                 return Conflict(); // "This email is already taken by others."
 
-            return Ok(personService.CreateItem(p));
+            return Ok(personService.GetItems(null).Last());
         }
 
         // querystring = "?type=practitioner"

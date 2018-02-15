@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using TCMManagement.BusinessLayer;
 using TCMManagement.Models;
+using Autofac;
 
 [assembly: OwinStartup(typeof(TCMManagement.Startup))]
 
@@ -16,7 +17,6 @@ namespace TCMManagement
     {
         public void Configuration(IAppBuilder app)
         {
-            
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
             var myProvider = new TcmAuthorizationServerProvider();
@@ -34,12 +34,8 @@ namespace TCMManagement
 
             HttpConfiguration config = new HttpConfiguration();
 
-            var mapperConfig = new AutoMapper.MapperConfiguration(c =>
-            {
-                c.AddProfile(new ApplicationProfile());
-            });
-            var mapper = mapperConfig.CreateMapper();
-            config.Services.Add(typeof(IMapper), mapper);
+            AutoMapperConfig.ConfigureAutoMapper();
+            AutofacSetup.ConfigureAutofac(config);
 
             WebApiConfig.Register(config);
         }
