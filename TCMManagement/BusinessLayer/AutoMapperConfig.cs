@@ -21,7 +21,7 @@ namespace TCMManagement.BusinessLayer
     {
         public PersonProfile()
         {
-            CreateMap<PersonCreation, Person>().ReverseMap();
+            CreateMap<PersonCreation, Person>(MemberList.Source);
         }
     }
 }

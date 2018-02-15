@@ -28,14 +28,13 @@ namespace TCMManagement
                 Provider = myProvider
             };
 
-
             app.UseOAuthAuthorizationServer(options);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
 
             HttpConfiguration config = new HttpConfiguration();
 
             AutoMapperConfig.ConfigureAutoMapper();
-            AutofacSetup.ConfigureAutofac(config);
+            AutofacSetup.ConfigureAutofac();
 
             WebApiConfig.Register(config);
         }

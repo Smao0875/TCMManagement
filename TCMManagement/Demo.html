@@ -56,13 +56,13 @@
         function edit() {
             $.ajax({
                 url: uri,
-                type: 'PUT',
+                type: 'POST',
                 data: {
-                    PersonId: 1,
                     FirstName: $('#FirstName').val(),
                     LastName: $('#LastName').val(),
                     Email: $('#Email').val(),
                     Gender: $('#Gender').val(),
+                    DateCreated: new Date($.now())
                 },
                 success: function (result) {
                     $('#Result').text(result);

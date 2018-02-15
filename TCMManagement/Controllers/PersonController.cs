@@ -7,6 +7,7 @@ using TCMManagement.Models;
 using static TCMManagement.BusinessLayer.Constants;
 using System.Net;
 using AutoMapper;
+using System;
 
 namespace TCMManagement.Controllers
 {
@@ -24,11 +25,18 @@ namespace TCMManagement.Controllers
             mapper = m;
         }
 
+        public PersonController(IMapper m)
+        {
+            personService = new PersonService();
+            mapper = m;
+        }
+
         // Comment our for now, easier to test
         //[Authorize(Roles = "admin")]
         [HttpPost]
         public IHttpActionResult AddPerson(PersonCreation p)
         {
+            p.DateCreated = DateTime.Now;// used for debug.
             Person person = personService.CreateItem(mapper.Map<Person>(p));
             if(person == null)
                 return Conflict(); // "This email is already taken by others."
