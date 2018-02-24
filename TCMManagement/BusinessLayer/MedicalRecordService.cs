@@ -37,12 +37,12 @@ namespace TCMManagement.BusinessLayer
             return new List<MedicalHistoryRecord>();
         }
 
-        public MedicalHistoryRecord GetItemById(int id, Include include)
+        public MedicalHistoryRecord GetItemById(int id)
         {
             return context.MedicalHistoryRecords.FirstOrDefault(a => a.MedicalHistoryRecordId == id);
         }
 
-        public MedicalHistoryRecord SearchItem(string s, Include include)
+        public MedicalHistoryRecord SearchItem(string s)
         {
             return null;
         }

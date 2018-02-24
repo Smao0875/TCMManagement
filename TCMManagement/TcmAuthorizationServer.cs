@@ -18,7 +18,7 @@ namespace TCMManagement
         {
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             IEntityServices<Person> service = new PersonService();
-            Person person = service.SearchItem(context.UserName, Include.Role);
+            Person person = service.SearchItem(context.UserName);
 
             if(person == null)
             {

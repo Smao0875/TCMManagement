@@ -8,8 +8,8 @@ namespace TCMManagement.BusinessLayer
         where T : class
     {
         T CreateItem(T item);
-        T GetItemById(int id, Include include);
-        T SearchItem(string s, Include include);
+        T GetItemById(int id);
+        T SearchItem(string s);
         IEnumerable<T> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams);
         bool UpdateItem(int id, T item);
         bool DeleteItem(int id);
