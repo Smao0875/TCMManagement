@@ -1,7 +1,6 @@
 using Autofac;
 using Autofac.Integration.WebApi;
 using AutoMapper;
-using System.ComponentModel;
 using System.Reflection;
 using System.Web.Http;
 using TCMManagement.Models;
@@ -15,6 +14,16 @@ namespace TCMManagement.BusinessLayer
             var builder = new ContainerBuilder();
             builder.RegisterInstance(AutoMapperConfig.Mapper)
                 .As<IMapper>()
+                .SingleInstance();
+
+            IEntityServices<Person> personService = new PersonService();
+            builder.RegisterInstance(personService)
+                .As<IEntityServices<Person>>()
+                .SingleInstance();
+
+            IEntityServices<TreatmentRecord> treatmentRecordService = new TreatmentRecordService();
+            builder.RegisterInstance(treatmentRecordService)
+                .As<IEntityServices<TreatmentRecord>>()
                 .SingleInstance();
 
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());

@@ -43,7 +43,7 @@ namespace TCMManagement.Controllers
         [HttpGet]
         public IHttpActionResult GetAppointment(int id)
         {
-            var appointment = appointmentService.GetItemById(id, Include.None);
+            var appointment = appointmentService.GetItemById(id);
             if (appointment == null)
             {
                 return NotFound();

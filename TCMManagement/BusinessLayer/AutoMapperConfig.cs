@@ -1,4 +1,5 @@
 using AutoMapper;
+using TCMManagement.DTOs;
 using TCMManagement.Models;
 
 namespace TCMManagement.BusinessLayer
@@ -22,6 +23,7 @@ namespace TCMManagement.BusinessLayer
         public PersonProfile()
         {
             CreateMap<PersonCreation, Person>(MemberList.Source);
+            CreateMap<TreatmentCreation, TreatmentRecord>(MemberList.Source);
         }
     }
 }

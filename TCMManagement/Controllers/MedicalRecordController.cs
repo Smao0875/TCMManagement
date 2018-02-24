@@ -43,7 +43,7 @@ namespace TCMManagement.Controllers
         [HttpGet]
         public IHttpActionResult GetRecord(int id)
         {
-            var record = medicalRecordService.GetItemById(id, Include.None);
+            var record = medicalRecordService.GetItemById(id);
             if (record == null)
             {
                 return NotFound();

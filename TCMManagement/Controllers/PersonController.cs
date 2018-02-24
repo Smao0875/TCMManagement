@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using AutoMapper;
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.OData;
 using TCMManagement.BusinessLayer;
 using TCMManagement.Models;
-using static TCMManagement.BusinessLayer.Constants;
-using System.Net;
-using AutoMapper;
-using System;
 
 namespace TCMManagement.Controllers
 {
@@ -25,12 +23,6 @@ namespace TCMManagement.Controllers
             mapper = m;
         }
 
-        public PersonController(IMapper m)
-        {
-            personService = new PersonService();
-            mapper = m;
-        }
-
         // Comment our for now, easier to test
         //[Authorize(Roles = "admin")]
         [HttpPost]
@@ -41,7 +33,7 @@ namespace TCMManagement.Controllers
             if(person == null)
                 return Conflict(); // "This email is already taken by others."
 
-            return Ok(personService.GetItems(null).Last());
+            return Ok(person);
         }
 
         // querystring = "?type=practitioner"
@@ -53,10 +45,9 @@ namespace TCMManagement.Controllers
         }
 
         [HttpGet]
-        [Route("api/person/{id}/{include}")]
-        public IHttpActionResult GetPerson(int id, int include = (int)Include.None)
+        public IHttpActionResult GetPerson(int id)
         {
-            var person = personService.GetItemById(id, (Include)include);
+            var person = personService.GetItemById(id);
             if (person == null)
             {
                 return NotFound();
@@ -67,13 +58,33 @@ namespace TCMManagement.Controllers
         // Comment our for now, easier to test
         // [Authorize(Roles = "admin")]
         [HttpPut]
-        public IHttpActionResult EditPerson(int id, Person p)
+        public IHttpActionResult EditPerson(int id, Delta<Person> p)
         {
-            personService.UpdateItem(id, p);
+            return UpdatePerson(id, p);
+        }
+
+        [AcceptVerbs("PATCH")]
+        public IHttpActionResult PatchPerson(int id, Delta<Person> p)
+        {
+            return UpdatePerson(id, p);
+        }
+
+        // This method might need to be moved to business layer.
+        private IHttpActionResult UpdatePerson(int id, Delta<Person> p)
+        {
+            // We need to double check email duplication here.
+            Person person = personService.GetItemById(id);
+            if(person == null)
+            {
+                return NotFound();
+            }
+
+            p.Patch(person);
+            personService.SaveChanges();
             return Ok(id);
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [HttpDelete]
         public IHttpActionResult DeletePerson(int id)
         {

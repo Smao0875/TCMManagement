@@ -40,12 +40,12 @@ namespace TCMManagement.BusinessLayer
             return context.Appointments.ToList();
         }
 
-        public Appointment GetItemById(int id, Include include)
+        public Appointment GetItemById(int id)
         {
             return context.Appointments.FirstOrDefault(a => a.AppointmentId == id);
         }
 
-        public Appointment SearchItem(string s, Include include)
+        public Appointment SearchItem(string s)
         {
             return null;
         }

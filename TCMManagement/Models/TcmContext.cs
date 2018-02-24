@@ -13,6 +13,9 @@ namespace TCMManagement.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Person>()
+                        .Map(m => m.Requires("IsDeleted").HasValue(false))
+                        .Ignore(m => m.IsDeleted);
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -1,10 +1,11 @@
+using AutoMapper;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
 using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.OData;
 using TCMManagement.BusinessLayer;
+using TCMManagement.DTOs;
 using TCMManagement.Models;
-using static TCMManagement.BusinessLayer.Constants;
 
 namespace TCMManagement.Controllers
 {
@@ -14,22 +15,20 @@ namespace TCMManagement.Controllers
     public class TreatmentRecordController : ApiController
     {
         private IEntityServices<TreatmentRecord> treatmentRecordService;
+        private readonly IMapper mapper;
 
-        public TreatmentRecordController() {
-            treatmentRecordService = new TreatmentRecordService();
-        }
-
-        public TreatmentRecordController(IEntityServices<TreatmentRecord> service)
+        public TreatmentRecordController(IEntityServices<TreatmentRecord> service, IMapper m)
         {
             treatmentRecordService = service;
+            mapper = m;
         }
 
         // Comment our for now, easier to test
         // [Authorize(Roles = "Practitioner")]
         [HttpPost]
-        public IHttpActionResult AddRecord(TreatmentRecord t)
+        public IHttpActionResult AddRecord(TreatmentCreation t)
         {
-            return Ok(treatmentRecordService.CreateItem(t));
+            return Ok(treatmentRecordService.CreateItem(mapper.Map<TreatmentRecord>(t)));
         }
 
         // querystring = "?Patient=1"
@@ -45,7 +44,7 @@ namespace TCMManagement.Controllers
         [HttpGet]
         public IHttpActionResult GetRecord(int id)
         {
-            var record = treatmentRecordService.GetItemById(id, Include.None);
+            var record = treatmentRecordService.GetItemById(id);
             if (record == null)
             {
                 return NotFound();
@@ -56,13 +55,33 @@ namespace TCMManagement.Controllers
         // Comment our for now, easier to test
         // [Authorize(Roles = "Practitioner")]
         [HttpPut]
-        public IHttpActionResult EditRecord(int id, TreatmentRecord t)
+        public IHttpActionResult EditRecord(int id, Delta<TreatmentRecord> t)
         {
-            treatmentRecordService.UpdateItem(id, t);
+            return UpdateTreatmentRecord(id, t);
+        }
+
+        [AcceptVerbs("PATCH")]
+        public IHttpActionResult PatchPerson(int id, Delta<TreatmentRecord> t)
+        {
+            return UpdateTreatmentRecord(id, t);
+        }
+
+        // This method might need to be moved to business layer.
+        private IHttpActionResult UpdateTreatmentRecord(int id, Delta<TreatmentRecord> t)
+        {
+            // We need to double check email duplication here.
+            TreatmentRecord record = treatmentRecordService.GetItemById(id);
+            if (record == null)
+            {
+                return NotFound();
+            }
+
+            t.Patch(record);
+            treatmentRecordService.SaveChanges();
             return Ok(id);
         }
 
-// Need to change to softDelete
+        // Need to change to softDelete
         // [Authorize(Roles = "Practitioner")]
         [HttpDelete]
         public IHttpActionResult DeleteRecord(int id)

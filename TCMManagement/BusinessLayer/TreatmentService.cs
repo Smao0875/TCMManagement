@@ -22,7 +22,7 @@ namespace TCMManagement.BusinessLayer
         {
             context.TreatmentRecords.Add(t);
             SaveChanges();
-            return context.TreatmentRecords.Last();
+            return context.TreatmentRecords.ToList().Last();
         }
 
         public IEnumerable<TreatmentRecord> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams = null)
@@ -40,12 +40,12 @@ namespace TCMManagement.BusinessLayer
             return context.TreatmentRecords.ToList();
         }
 
-        public TreatmentRecord GetItemById(int id, Include include)
+        public TreatmentRecord GetItemById(int id)
         {
             return context.TreatmentRecords.FirstOrDefault(a => a.TreatmentRecordId == id);
         }
 
-        public TreatmentRecord SearchItem(string s, Include include)
+        public TreatmentRecord SearchItem(string s)
         {
             return null;
         }

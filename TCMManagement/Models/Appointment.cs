@@ -4,8 +4,6 @@ using System.Runtime.Serialization;
 
 namespace TCMManagement.Models
 {
-    [Serializable]
-    [DataContract(IsReference = true)]
     public class Appointment
     {
         [Key]
