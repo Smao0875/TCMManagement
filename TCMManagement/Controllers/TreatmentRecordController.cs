@@ -61,7 +61,7 @@ namespace TCMManagement.Controllers
         }
 
         [AcceptVerbs("PATCH")]
-        public IHttpActionResult PatchPerson(int id, Delta<TreatmentRecord> t)
+        public IHttpActionResult PatchRecord(int id, Delta<TreatmentRecord> t)
         {
             return UpdateTreatmentRecord(id, t);
         }

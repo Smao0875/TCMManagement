@@ -24,6 +24,7 @@ namespace TCMManagement.BusinessLayer
         {
             CreateMap<PersonCreation, Person>(MemberList.Source);
             CreateMap<TreatmentCreation, TreatmentRecord>(MemberList.Source);
+            CreateMap<MedicalRecordCreation, MedicalHistoryRecord>(MemberList.Source);
         }
     }
 }

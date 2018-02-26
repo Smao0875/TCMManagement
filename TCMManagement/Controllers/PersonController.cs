@@ -28,12 +28,12 @@ namespace TCMManagement.Controllers
         [HttpPost]
         public IHttpActionResult AddPerson(PersonCreation p)
         {
-            p.DateCreated = DateTime.Now;// used for debug.
-            Person person = personService.CreateItem(mapper.Map<Person>(p));
-            if(person == null)
+            if (IsEmailExist(p.Email))
+            {
                 return Conflict(); // "This email is already taken by others."
+            }
 
-            return Ok(person);
+            return Ok(personService.CreateItem(mapper.Map<Person>(p)));
         }
 
         // querystring = "?type=practitioner"
@@ -69,21 +69,6 @@ namespace TCMManagement.Controllers
             return UpdatePerson(id, p);
         }
 
-        // This method might need to be moved to business layer.
-        private IHttpActionResult UpdatePerson(int id, Delta<Person> p)
-        {
-            // We need to double check email duplication here.
-            Person person = personService.GetItemById(id);
-            if(person == null)
-            {
-                return NotFound();
-            }
-
-            p.Patch(person);
-            personService.SaveChanges();
-            return Ok(id);
-        }
-
         //[Authorize(Roles = "admin")]
         [HttpDelete]
         public IHttpActionResult DeletePerson(int id)
@@ -94,5 +79,31 @@ namespace TCMManagement.Controllers
             }
             return NotFound();
         }
+
+        #region Helper
+        public bool IsEmailExist(string email)
+        {
+            if (personService.SearchItem(email) != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private IHttpActionResult UpdatePerson(int id, Delta<Person> p)
+        {
+            // NOTE: Email can't be updated!!!
+            Person person = personService.GetItemById(id);
+            if (person == null)
+            {
+                return NotFound();
+            }
+
+            p.Patch(person);
+            personService.SaveChanges();
+            return Ok(id);
+        }
+        #endregion
     }
 }

@@ -22,7 +22,7 @@ namespace TCMManagement.BusinessLayer
         {
             context.MedicalHistoryRecords.Add(m);
             SaveChanges();
-            return context.MedicalHistoryRecords.Last();
+            return context.MedicalHistoryRecords.ToList().Last();
         }
 
         public IEnumerable<MedicalHistoryRecord> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams = null)
@@ -34,7 +34,7 @@ namespace TCMManagement.BusinessLayer
 
                 return context.MedicalHistoryRecords.Where(a => a.PatientId == id ).ToList();
             }
-            return new List<MedicalHistoryRecord>();
+            return context.MedicalHistoryRecords.ToList();
         }
 
         public MedicalHistoryRecord GetItemById(int id)
@@ -44,7 +44,8 @@ namespace TCMManagement.BusinessLayer
 
         public MedicalHistoryRecord SearchItem(string s)
         {
-            return null;
+            return context.MedicalHistoryRecords
+                          .FirstOrDefault(p => p.Description.ToLower().Contains(s.ToLower()));
         }
 
         public bool UpdateItem(int id, MedicalHistoryRecord a)
@@ -71,6 +72,10 @@ namespace TCMManagement.BusinessLayer
 
         public int SaveChanges()
         {
+#if DEBUG
+            context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+#endif
+            Utils.SoftDeleteEntry(context);
             return context.SaveChanges();
         }
 

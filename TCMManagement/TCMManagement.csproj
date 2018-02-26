@@ -197,15 +197,12 @@
     <Compile Include="Controllers\MedicalRecordController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\TreatmentRecordController.cs" />
+    <Compile Include="DTOs\MedicalRecordCreation.cs" />
     <Compile Include="DTOs\PersonCreation.cs" />
     <Compile Include="DTOs\TreatmentCreation.cs" />
-    <Compile Include="Migrations\201802112108388_seperate patient and person table.cs" />
-    <Compile Include="Migrations\201802112108388_seperate patient and person table.Designer.cs">
-      <DependentUpon>201802112108388_seperate patient and person table.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802140117233_Add soft delete flag.cs" />
-    <Compile Include="Migrations\201802140117233_Add soft delete flag.Designer.cs">
-      <DependentUpon>201802140117233_Add soft delete flag.cs</DependentUpon>
+    <Compile Include="Migrations\201802261703122_Initial.cs" />
+    <Compile Include="Migrations\201802261703122_Initial.Designer.cs">
+      <DependentUpon>201802261703122_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\MedicalHistoryRecord.cs" />
     <Compile Include="Models\TcmContext.cs" />
@@ -236,11 +233,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201802112108388_seperate patient and person table.resx">
-      <DependentUpon>201802112108388_seperate patient and person table.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802140117233_Add soft delete flag.resx">
-      <DependentUpon>201802140117233_Add soft delete flag.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201802261703122_Initial.resx">
+      <DependentUpon>201802261703122_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

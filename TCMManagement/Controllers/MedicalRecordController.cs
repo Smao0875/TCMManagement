@@ -5,6 +5,10 @@ using System.Net.Http;
 using TCMManagement.BusinessLayer;
 using TCMManagement.Models;
 using static TCMManagement.BusinessLayer.Constants;
+using AutoMapper;
+using TCMManagement.DTOs;
+using System.Web.Http.OData;
+using System;
 
 namespace TCMManagement.Controllers
 {
@@ -14,22 +18,20 @@ namespace TCMManagement.Controllers
     public class MedicalRecordController : ApiController
     {
         private IEntityServices<MedicalHistoryRecord> medicalRecordService;
+        private readonly IMapper mapper;
 
-        public MedicalRecordController() {
-            medicalRecordService = new MedicalRecordService();
-        }
-
-        public MedicalRecordController(IEntityServices<MedicalHistoryRecord> service)
+        public MedicalRecordController(IEntityServices<MedicalHistoryRecord> service, IMapper m)
         {
             medicalRecordService = service;
+            mapper = m;
         }
 
         // Comment our for now, easier to test
         // [Authorize(Roles = "Practitioner")]
         [HttpPost]
-        public IHttpActionResult AddRecord(MedicalHistoryRecord m)
+        public IHttpActionResult AddRecord(MedicalRecordCreation m)
         {
-            return Ok(medicalRecordService.CreateItem(m));
+            return Ok(medicalRecordService.CreateItem(mapper.Map<MedicalHistoryRecord>(m)));
         }
 
         // querystring = "?Patient=1"
@@ -54,9 +56,29 @@ namespace TCMManagement.Controllers
         // Comment our for now, easier to test
         // [Authorize(Roles = "Practitioner")]
         [HttpPut]
-        public IHttpActionResult EditRecord(int id, MedicalHistoryRecord m)
+        public IHttpActionResult EditRecord(int id, Delta<MedicalHistoryRecord> m)
         {
-            medicalRecordService.UpdateItem(id, m);
+            return UpdateMedicalHistoryRecord(id, m);
+        }
+
+        [AcceptVerbs("PATCH")]
+        public IHttpActionResult PatchRecord(int id, Delta<MedicalHistoryRecord> m)
+        {
+            return UpdateMedicalHistoryRecord(id, m);
+        }
+
+        // This method might need to be moved to business layer.
+        private IHttpActionResult UpdateMedicalHistoryRecord(int id, Delta<MedicalHistoryRecord> m)
+        {
+            // We need to double check email duplication here.
+            MedicalHistoryRecord record = medicalRecordService.GetItemById(id);
+            if (record == null)
+            {
+                return NotFound();
+            }
+
+            m.Patch(record);
+            medicalRecordService.SaveChanges();
             return Ok(id);
         }
 

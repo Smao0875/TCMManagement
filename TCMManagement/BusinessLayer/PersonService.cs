@@ -18,9 +18,6 @@ namespace TCMManagement.BusinessLayer
 
         public Person CreateItem(Person p)
         {
-            if(SearchItem(p.Email) != null)
-                return null;
-
             context.People.Add(p);
             SaveChanges();
             return context.People.ToList().Last();
