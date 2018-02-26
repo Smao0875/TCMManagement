@@ -81,7 +81,7 @@ namespace TCMManagement.Controllers
         }
 
         #region Helper
-        public bool IsEmailExist(string email)
+        private bool IsEmailExist(string email)
         {
             if (personService.SearchItem(email) != null)
             {

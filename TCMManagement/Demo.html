@@ -44,7 +44,7 @@
 
     function find() {
         var id = $('#patientId').val();
-      $.getJSON(uri + '/' + id + "/" + "4")
+      $.getJSON(uri + '/' + id)
           .done(function (data) {
               $('#patient').text(formatItem(data));
           })
