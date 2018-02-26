@@ -13,6 +13,7 @@ namespace TCMManagement
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+            config.EnableCors();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
@@ -20,6 +21,9 @@ namespace TCMManagement
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes
+                                   .FirstOrDefault(t => t.MediaType == "application/xml");
+            config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         }
     }
