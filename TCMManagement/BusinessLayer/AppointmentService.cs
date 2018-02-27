@@ -20,10 +20,50 @@ namespace TCMManagement.BusinessLayer
         // NOTE: We might need to check the validity of this appointment.
         public Appointment CreateItem(Appointment a)
         {
+            // check the start time of the new appointment
+            var conflictList = context.Appointments
+                                .Where(ea => ea.TimeStart <= a.TimeStart)
+                                .Where(ea => ea.TimeEnd >= a.TimeStart)
+                                .ToList();
+            foreach(var conflictAppointment in conflictList)
+            {
+                // it means the start time is between an existed appointment 
+                if ((conflictAppointment.PersonId == a.PersonId) || (conflictAppointment.PatientId == a.PatientId))
+                    return null;
+            }
+            // check the end time of the new appointment
+            conflictList = context.Appointments
+                    .Where(ea => ea.TimeStart <= a.TimeEnd)
+                    .Where(ea => ea.TimeEnd >= a.TimeEnd)
+                    .ToList();
+            foreach (var conflictAppointment in conflictList)
+            {
+                // it means the end time is between an existed appointment 
+                if ((conflictAppointment.PersonId == a.PersonId) || (conflictAppointment.PatientId == a.PatientId))
+                    return null;
+            }
+
+            // no conflict, add the appointment
             context.Appointments.Add(a);
             SaveChanges();
-            return context.Appointments.Last();
+            return context.Appointments.ToList().Last();
         }
+
+        
+        public IEnumerable<Appointment> GetItemsByPatient(int patientId)
+        {
+            return (context.Appointments.Where(a => a.PatientId == patientId).ToList());
+        }
+
+        public IEnumerable<Appointment> GetItemByPerson(int personId, DateTime timeStart, DateTime timeEnd)
+        {
+            // in real world case,  timeStart and timeEnd should be always 0:00 of a day   
+            return (context.Appointments
+                                    .Where(a => a.PersonId == personId)
+                                    .Where(a => a.TimeStart >= timeStart)
+                                    .Where(a => a.TimeEnd <= timeEnd).ToList());
+        }
+
 
         public IEnumerable<Appointment> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
@@ -52,6 +92,7 @@ namespace TCMManagement.BusinessLayer
 
         public bool UpdateItem(int id, Appointment a)
         {
+
             return true;
         }
 
