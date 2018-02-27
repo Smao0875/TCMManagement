@@ -5,6 +5,7 @@ using System.Data.Entity;
 using static TCMManagement.BusinessLayer.Constants;
 using TCMManagement.BusinessLayer;
 using System;
+using System.Web.Http.OData;
 
 namespace TCMManagement.BusinessLayer
 {
@@ -64,7 +65,6 @@ namespace TCMManagement.BusinessLayer
                                     .Where(a => a.TimeEnd <= timeEnd).ToList());
         }
 
-
         public IEnumerable<Appointment> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
             if(!Utils.IsNullOrEmpty(queryParams)){
@@ -85,20 +85,31 @@ namespace TCMManagement.BusinessLayer
             return context.Appointments.FirstOrDefault(a => a.AppointmentId == id);
         }
 
+        // no need for appointment
         public Appointment SearchItem(string s)
         {
             return null;
         }
 
-        public bool UpdateItem(int id, Appointment a)
+        // using Delta, but need namespace System.Web.Http.OData
+        public bool UpdateItem(int id, Delta<Appointment> a)
         {
+            // We need to double check email duplication here.
+            Appointment appointmentToUpdate = GetItemById(id);
 
+            if (appointmentToUpdate == null)
+            {
+                return false;
+            }
+
+            a.Patch(appointmentToUpdate);
+            SaveChanges();
             return true;
         }
 
         public bool DeleteItem(int id)
         {
-            Appointment a = context.Appointments.Find(id);
+            Appointment a = GetItemById(id);
             if (a == null)
             {
                 return false;
