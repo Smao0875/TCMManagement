@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -56,9 +57,15 @@ namespace TCMManagement.Controllers
         [HttpPut]
         public IHttpActionResult EditAppointment(int id, Appointment a)
         {
-            appointmentService.UpdateItem(id, a);
-            return Ok(id);
-        }
+            if (appointmentService.UpdateItem(id, a))
+            {
+                return Ok(id);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }   
 
         // [Authorize(Roles = "Receptionist")]
         [HttpDelete]
