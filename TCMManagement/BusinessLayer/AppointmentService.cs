@@ -23,27 +23,20 @@ namespace TCMManagement.BusinessLayer
         {
             // check the start time of the new appointment
             var conflictList = context.Appointments
-                                .Where(ea => ea.TimeStart <= a.TimeStart)
-                                .Where(ea => ea.TimeEnd >= a.TimeStart)
+                                .Where(ea => ea.PatientId == a.PatientId)
+                                .Where(ea => ea.PersonId == a.PersonId)
                                 .ToList();
-            foreach(var conflictAppointment in conflictList)
-            {
-                // it means the start time is between an existed appointment 
-                if ((conflictAppointment.PersonId == a.PersonId) || (conflictAppointment.PatientId == a.PatientId))
-                    return null;
-            }
-            // check the end time of the new appointment
-            conflictList = context.Appointments
-                    .Where(ea => ea.TimeStart <= a.TimeEnd)
-                    .Where(ea => ea.TimeEnd >= a.TimeEnd)
-                    .ToList();
             foreach (var conflictAppointment in conflictList)
             {
-                // it means the end time is between an existed appointment 
-                if ((conflictAppointment.PersonId == a.PersonId) || (conflictAppointment.PatientId == a.PatientId))
+                // it means the start time is between an existed appointment 
+                if ((conflictAppointment.TimeStart >= a.TimeStart && conflictAppointment.TimeStart <= a.TimeEnd)
+                 || (conflictAppointment.TimeEnd >= a.TimeStart && conflictAppointment.TimeEnd <= a.TimeEnd)
+                 || (a.TimeStart >= conflictAppointment.TimeStart && a.TimeStart <= conflictAppointment.TimeEnd)
+                 || (a.TimeEnd >= conflictAppointment.TimeStart && a.TimeEnd <= conflictAppointment.TimeEnd))
+                {
                     return null;
+                }
             }
-
             // no conflict, add the appointment
             context.Appointments.Add(a);
             SaveChanges();
