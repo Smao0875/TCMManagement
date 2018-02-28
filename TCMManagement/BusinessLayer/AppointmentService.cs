@@ -67,10 +67,9 @@ namespace TCMManagement.BusinessLayer
                     return context.Appointments
                                             .Where(a => a.PersonId == id)
                                             .Where(a => a.TimeStart >= timeStart)
-                                            .Where(a => a.TimeEnd <= timeEnd).ToList());
+                                            .Where(a => a.TimeEnd <= timeEnd).ToList();
                 }
             }
-            //return context.Appointments.ToList();
             return (new List<Appointment>());
         }
        
