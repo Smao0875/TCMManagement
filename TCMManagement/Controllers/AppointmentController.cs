@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -34,21 +35,15 @@ namespace TCMManagement.Controllers
 
         // querystring = "?person=1"
         [HttpGet]
-        public IEnumerable<Appointment> GetAppointments()
+        public IEnumerable<Appointment> GetPersonAppointments(int personId, DateTime timeStart, DateTime timeEnd)
         {
-            var keyValuePairs = ControllerContext.Request.GetQueryNameValuePairs();
-            return appointmentService.GetItems(keyValuePairs);
+            return appointmentService.GetItems(personId, timeStart, timeEnd);
         }
 
         [HttpGet]
-        public IHttpActionResult GetAppointment(int id)
+        public IEnumerable<Appointment> GetPatientAppointment(int patientId)
         {
-            var appointment = appointmentService.GetItemById(id);
-            if (appointment == null)
-            {
-                return NotFound();
-            }
-            return Ok(appointment);
+            return appointmentService.GetItems(patientId);
         }
 
         // Comment our for now, easier to test

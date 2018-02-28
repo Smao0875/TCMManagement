@@ -50,21 +50,6 @@ namespace TCMManagement.BusinessLayer
             return context.Appointments.ToList().Last();
         }
 
-        
-        public IEnumerable<Appointment> GetItemsByPatient(int patientId)
-        {
-            return (context.Appointments.Where(a => a.PatientId == patientId).ToList());
-        }
-
-        public IEnumerable<Appointment> GetItemByPerson(int personId, DateTime timeStart, DateTime timeEnd)
-        {
-            // in real world case,  timeStart and timeEnd should be always 0:00 of a day   
-            return (context.Appointments
-                                    .Where(a => a.PersonId == personId)
-                                    .Where(a => a.TimeStart >= timeStart)
-                                    .Where(a => a.TimeEnd <= timeEnd).ToList());
-        }
-
         public IEnumerable<Appointment> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
             if(!Utils.IsNullOrEmpty(queryParams)){
@@ -75,10 +60,20 @@ namespace TCMManagement.BusinessLayer
                 if(isPatient)
                     return context.Appointments.Where(a => a.PatientId == id ).ToList();
                 else
-                    return context.Appointments.Where(a => a.PersonId == id ).ToList(); 
+                {
+                    List<KeyValuePair<string, string>> queryList = queryParams.ToList();
+                    DateTime timeStart = DateTime.Parse(queryList[1].Value);
+                    DateTime timeEnd = DateTime.Parse(queryList[2].Value);
+                    return context.Appointments
+                                            .Where(a => a.PersonId == id)
+                                            .Where(a => a.TimeStart >= timeStart)
+                                            .Where(a => a.TimeEnd <= timeEnd).ToList());
+                }
             }
-            return context.Appointments.ToList();
+            //return context.Appointments.ToList();
+            return (new List<Appointment>());
         }
+       
 
         public Appointment GetItemById(int id)
         {
@@ -104,6 +99,11 @@ namespace TCMManagement.BusinessLayer
 
             a.Patch(appointmentToUpdate);
             SaveChanges();
+            return true;
+        }
+
+        public bool UpdateItem(int id, Appointment p)
+        {
             return true;
         }
 
