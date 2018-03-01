@@ -28,7 +28,7 @@ namespace TCMManagement.BusinessLayer
                                 .ToList();
             foreach (var conflictAppointment in conflictList)
             {
-                // it means the start time is between an existed appointment 
+                // any time overlap will cause conflict
                 if ((conflictAppointment.TimeStart >= a.TimeStart && conflictAppointment.TimeStart <= a.TimeEnd)
                  || (conflictAppointment.TimeEnd >= a.TimeStart && conflictAppointment.TimeEnd <= a.TimeEnd)
                  || (a.TimeStart >= conflictAppointment.TimeStart && a.TimeStart <= conflictAppointment.TimeEnd)
