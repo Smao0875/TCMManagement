@@ -1,15 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using AutoMapper;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System.Collections.Generic;
+using System.Web.Http;
+using System.Web.Http.OData;
 using System.Web.Http.Results;
 using TCMManagement.Controllers;
-using TCMManagement.Models;
-using Moq;
-using AutoMapper;
-using System;
 using TCMManagement.ErrorHelper;
-using System.Web.Http;
-using System.Net.Http;
-using System.Collections.Generic;
-using System.Web.Http.OData;
+using TCMManagement.Models;
 
 namespace TCMManagement.Test
 {
