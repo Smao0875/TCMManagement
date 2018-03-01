@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Http;
+using System.Web.Http.OData.Formatter;
+using TCMManagement.ActionFilters;
 
 namespace TCMManagement
 {
@@ -9,10 +9,14 @@ namespace TCMManagement
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            // Filters
+            config.Filters.Add(new LoggingFilterAttribute());
+            config.Filters.Add(new GlobalExceptionAttribute());
+
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+
             config.EnableCors();
 
             config.Routes.MapHttpRoute(
@@ -21,10 +25,12 @@ namespace TCMManagement
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            // Web API configuration and services
             var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes
                                    .FirstOrDefault(t => t.MediaType == "application/xml");
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.None;
         }
     }
 }

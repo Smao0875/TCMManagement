@@ -16,6 +16,15 @@ namespace TCMManagement.Models
             modelBuilder.Entity<Person>()
                         .Map(m => m.Requires("IsDeleted").HasValue(false))
                         .Ignore(m => m.IsDeleted);
+            modelBuilder.Entity<Patient>()
+                        .Map(m => m.Requires("IsDeleted").HasValue(false))
+                        .Ignore(m => m.IsDeleted);
+            modelBuilder.Entity<TreatmentRecord>()
+                        .Map(m => m.Requires("IsDeleted").HasValue(false))
+                        .Ignore(m => m.IsDeleted);
+            modelBuilder.Entity<MedicalHistoryRecord>()
+                        .Map(m => m.Requires("IsDeleted").HasValue(false))
+                        .Ignore(m => m.IsDeleted);
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -3,7 +3,7 @@ namespace TCMManagement.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class seperatepatientandpersontable : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -20,8 +20,8 @@ namespace TCMManagement.Migrations
                         PatientId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.AppointmentId)
-                .ForeignKey("dbo.Patients", t => t.PatientId, cascadeDelete: true)
-                .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: true)
+                .ForeignKey("dbo.Patients", t => t.PatientId, cascadeDelete: false)
+                .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: false)
                 .Index(t => t.PersonId)
                 .Index(t => t.PatientId);
             
@@ -43,6 +43,7 @@ namespace TCMManagement.Migrations
                         EmergencyContactPhone = c.String(),
                         DateOfBirth = c.DateTime(nullable: false),
                         UserRoleId = c.Int(nullable: false),
+                        IsDeleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.PatientId)
                 .ForeignKey("dbo.UserRoles", t => t.UserRoleId, cascadeDelete: false)
@@ -60,9 +61,10 @@ namespace TCMManagement.Migrations
                         Dosage = c.String(),
                         IsFamily = c.Boolean(nullable: false),
                         PatientId = c.Int(nullable: false),
+                        IsDeleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.MedicalHistoryRecordId)
-                .ForeignKey("dbo.Patients", t => t.PatientId, cascadeDelete: true)
+                .ForeignKey("dbo.Patients", t => t.PatientId, cascadeDelete: false)
                 .Index(t => t.PatientId);
             
             CreateTable(
@@ -86,10 +88,11 @@ namespace TCMManagement.Migrations
                         PrescriptionID = c.Int(nullable: false),
                         PersonId = c.Int(nullable: false),
                         PatientId = c.Int(nullable: false),
+                        IsDeleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.TreatmentRecordId)
-                .ForeignKey("dbo.Patients", t => t.PatientId, cascadeDelete: true)
-                .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: true)
+                .ForeignKey("dbo.Patients", t => t.PatientId, cascadeDelete: false)
+                .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: false)
                 .Index(t => t.PersonId)
                 .Index(t => t.PatientId);
             
@@ -107,6 +110,7 @@ namespace TCMManagement.Migrations
                         Note = c.String(),
                         Password = c.String(),
                         UserRoleId = c.Int(nullable: false),
+                        IsDeleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.PersonId)
                 .ForeignKey("dbo.UserRoles", t => t.UserRoleId, cascadeDelete: false)

@@ -7,8 +7,13 @@ namespace TCMManagement.Test
     {
         public override Person Find(params object[] keyValues)
         {
-            return this.SingleOrDefault(person => person.PersonId == (int)keyValues.Single());
-        }
+            if(keyValues.Single() is int)
+                return this.SingleOrDefault(person => person.PersonId == (int)keyValues.Single());
 
+            if(keyValues.Single() is string)
+                return this.SingleOrDefault(person => person.Email == (string)keyValues.Single());
+
+            return null;
+        }
     }
 }

@@ -1,10 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using TCMManagement.Models;
-using System.Data.Entity;
-using static TCMManagement.BusinessLayer.Constants;
-using TCMManagement.BusinessLayer;
-using System;
 
 namespace TCMManagement.BusinessLayer
 {
@@ -22,19 +20,20 @@ namespace TCMManagement.BusinessLayer
         {
             context.MedicalHistoryRecords.Add(m);
             SaveChanges();
-            return context.MedicalHistoryRecords.Last();
+            return context.MedicalHistoryRecords.ToList().Last();
         }
 
         public IEnumerable<MedicalHistoryRecord> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            if(!Utils.IsNullOrEmpty(queryParams)){
+            if(!Utils.IsNullOrEmpty(queryParams))
+            {
                 KeyValuePair<string, string> p = queryParams.FirstOrDefault();
                 bool isPatient = p.Key == "Patient";
                 int id = Int32.Parse(p.Value);
 
                 return context.MedicalHistoryRecords.Where(a => a.PatientId == id ).ToList();
             }
-            return new List<MedicalHistoryRecord>();
+            return context.MedicalHistoryRecords.ToList();
         }
 
         public MedicalHistoryRecord GetItemById(int id)
@@ -44,7 +43,8 @@ namespace TCMManagement.BusinessLayer
 
         public MedicalHistoryRecord SearchItem(string s)
         {
-            return null;
+            return context.MedicalHistoryRecords
+                          .FirstOrDefault(p => p.Description.ToLower().Contains(s.ToLower()));
         }
 
         public bool UpdateItem(int id, MedicalHistoryRecord a)
@@ -71,6 +71,7 @@ namespace TCMManagement.BusinessLayer
 
         public int SaveChanges()
         {
+            Utils.SoftDeleteEntry(context);
             return context.SaveChanges();
         }
 
