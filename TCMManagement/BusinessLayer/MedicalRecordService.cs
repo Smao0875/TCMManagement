@@ -1,10 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using TCMManagement.Models;
-using System.Data.Entity;
-using static TCMManagement.BusinessLayer.Constants;
-using TCMManagement.BusinessLayer;
-using System;
 
 namespace TCMManagement.BusinessLayer
 {
@@ -27,7 +25,8 @@ namespace TCMManagement.BusinessLayer
 
         public IEnumerable<MedicalHistoryRecord> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            if(!Utils.IsNullOrEmpty(queryParams)){
+            if(!Utils.IsNullOrEmpty(queryParams))
+            {
                 KeyValuePair<string, string> p = queryParams.FirstOrDefault();
                 bool isPatient = p.Key == "Patient";
                 int id = Int32.Parse(p.Value);
@@ -72,9 +71,6 @@ namespace TCMManagement.BusinessLayer
 
         public int SaveChanges()
         {
-#if DEBUG
-            context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
-#endif
             Utils.SoftDeleteEntry(context);
             return context.SaveChanges();
         }

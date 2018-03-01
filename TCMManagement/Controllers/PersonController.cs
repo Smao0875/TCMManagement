@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.OData;
 using TCMManagement.BusinessLayer;
+using TCMManagement.ErrorHelper;
 using TCMManagement.Models;
 
 namespace TCMManagement.Controllers
@@ -40,7 +41,7 @@ namespace TCMManagement.Controllers
         [HttpGet]
         public IEnumerable<Person> GetAllPersons()
         {
-            var keyValuePairs = ControllerContext.Request.GetQueryNameValuePairs();
+            var keyValuePairs = ControllerContext.Request?.GetQueryNameValuePairs();
             return personService.GetItems(keyValuePairs);
         }
 
@@ -50,7 +51,7 @@ namespace TCMManagement.Controllers
             var person = personService.GetItemById(id);
             if (person == null)
             {
-                return NotFound();
+                throw new ApiDataException(1001, "No product found for this id.", HttpStatusCode.NotFound);
             }
             return Ok(person);
         }

@@ -16,7 +16,10 @@ namespace TCMManagement.Test
 
         public bool DeleteItem(int id)
         {
-            throw new NotImplementedException();
+            if (context.Remove(context.Find(id)) != null)
+                return true;
+
+            return false;
         }
 
         public void Dispose()
@@ -26,7 +29,10 @@ namespace TCMManagement.Test
 
         public IEnumerable<Person> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            throw new NotImplementedException();
+            Person[] people = new Person[context.Local.Count];
+            context.Local.CopyTo(people, 0);
+
+            return new List<Person>(people);
         }
 
         public Person GetItemById(int id)
@@ -51,12 +57,12 @@ namespace TCMManagement.Test
 
         public bool UpdateItem(int id, Person item)
         {
-            throw new NotImplementedException();
+            return true;
         }
         
         Person IEntityServices<Person>.SearchItem(string s)
         {
-            throw new NotImplementedException();
+            return context.Find(s);
         }
     }
 }
