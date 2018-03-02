@@ -23,16 +23,13 @@ namespace TCMManagement.BusinessLayer
         {
             // check the start time of the new appointment
             var conflictList = context.Appointments
-                                .Where(ea => ea.PatientId == a.PatientId)
-                                .Where(ea => ea.PersonId == a.PersonId)
+                                .Where(ea => ea.PatientId == a.PatientId || ea.PersonId == a.PersonId)
                                 .ToList();
             foreach (var conflictAppointment in conflictList)
             {
                 // any time overlap will cause conflict
-                if ((conflictAppointment.TimeStart >= a.TimeStart && conflictAppointment.TimeStart <= a.TimeEnd)
-                 || (conflictAppointment.TimeEnd >= a.TimeStart && conflictAppointment.TimeEnd <= a.TimeEnd)
-                 || (a.TimeStart >= conflictAppointment.TimeStart && a.TimeStart <= conflictAppointment.TimeEnd)
-                 || (a.TimeEnd >= conflictAppointment.TimeStart && a.TimeEnd <= conflictAppointment.TimeEnd))
+                if ((conflictAppointment.TimeStart >= a.TimeStart && conflictAppointment.TimeStart < a.TimeEnd)
+                 || (conflictAppointment.TimeEnd > a.TimeStart && conflictAppointment.TimeEnd <= a.TimeEnd))
                 {
                     return null;
                 }
@@ -50,17 +47,33 @@ namespace TCMManagement.BusinessLayer
                 bool isPatient = p.Key == "Patient";
                 int id = Int32.Parse(p.Value);
 
-                if(isPatient)
-                    return context.Appointments.Where(a => a.PatientId == id ).ToList();
+                if (isPatient)
+                {
+                    return context.Appointments.Where(a => a.PatientId == id).ToList();
+                }
                 else
                 {
                     List<KeyValuePair<string, string>> queryList = queryParams.ToList();
-                    DateTime timeStart = DateTime.Parse(queryList[1].Value);
-                    DateTime timeEnd = DateTime.Parse(queryList[2].Value);
-                    return context.Appointments
-                                            .Where(a => a.PersonId == id)
-                                            .Where(a => a.TimeStart >= timeStart)
-                                            .Where(a => a.TimeEnd <= timeEnd).ToList();
+                    if (queryList.Count() == 1)
+                    {
+                        return context.Appointments.Where(a => a.PersonId == id).ToList();
+                    }
+                    else
+                    {
+                        DateTime timeStart = DateTime.Parse(queryList[1].Value);
+                        DateTime timeEnd = DateTime.Parse(queryList[2].Value);
+                        if (timeStart > timeEnd)
+                        {
+                            // make sure timeEnd >= timeStart
+                            DateTime tmp = timeStart;
+                            timeStart = timeEnd;
+                            timeEnd = timeStart;
+                        }
+                        return context.Appointments
+                                                .Where(a => a.PersonId == id)
+                                                .Where(a => a.TimeStart >= timeStart)
+                                                .Where(a => a.TimeEnd <= timeEnd).ToList();
+                    }
                 }
             }
             return (new List<Appointment>());
@@ -79,20 +92,22 @@ namespace TCMManagement.BusinessLayer
         }
 
         // using Delta, but need namespace System.Web.Http.OData
-        public bool UpdateItem(int id, Delta<Appointment> a)
-        {
-            // We need to double check email duplication here.
-            Appointment appointmentToUpdate = GetItemById(id);
-
-            if (appointmentToUpdate == null)
+        /*
+            public bool UpdateItem(int id, Delta<Appointment> a)
             {
-                return false;
-            }
+                // We need to double check email duplication here.
+                Appointment appointmentToUpdate = GetItemById(id);
 
-            a.Patch(appointmentToUpdate);
-            SaveChanges();
-            return true;
-        }
+                if (appointmentToUpdate == null)
+                {
+                    return false;
+                }
+
+                a.Patch(appointmentToUpdate);
+                SaveChanges();
+                return true;
+            }
+        */
 
         public bool UpdateItem(int id, Appointment p)
         {
