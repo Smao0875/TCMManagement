@@ -23,8 +23,7 @@ namespace TCMManagement.BusinessLayer
         {
             // check the start time of the new appointment
             var conflictList = context.Appointments
-                                .Where(ea => ea.PatientId == a.PatientId)
-                                .Where(ea => ea.PersonId == a.PersonId)
+                                .Where(ea => ea.PatientId == a.PatientId || ea.PersonId == a.PersonId)
                                 .ToList();
             foreach (var conflictAppointment in conflictList)
             {
@@ -50,17 +49,26 @@ namespace TCMManagement.BusinessLayer
                 bool isPatient = p.Key == "Patient";
                 int id = Int32.Parse(p.Value);
 
-                if(isPatient)
-                    return context.Appointments.Where(a => a.PatientId == id ).ToList();
+                if (isPatient)
+                {
+                    return context.Appointments.Where(a => a.PatientId == id).ToList();
+                }
                 else
                 {
                     List<KeyValuePair<string, string>> queryList = queryParams.ToList();
-                    DateTime timeStart = DateTime.Parse(queryList[1].Value);
-                    DateTime timeEnd = DateTime.Parse(queryList[2].Value);
-                    return context.Appointments
-                                            .Where(a => a.PersonId == id)
-                                            .Where(a => a.TimeStart >= timeStart)
-                                            .Where(a => a.TimeEnd <= timeEnd).ToList();
+                    if (queryList.Count() == 1)
+                    {
+                        return context.Appointments.Where(a => a.PersonId == id).ToList();
+                    }
+                    else
+                    {
+                        DateTime timeStart = DateTime.Parse(queryList[1].Value);
+                        DateTime timeEnd = DateTime.Parse(queryList[2].Value);
+                        return context.Appointments
+                                                .Where(a => a.PersonId == id)
+                                                .Where(a => a.TimeStart >= timeStart)
+                                                .Where(a => a.TimeEnd <= timeEnd).ToList();
+                    }
                 }
             }
             return (new List<Appointment>());

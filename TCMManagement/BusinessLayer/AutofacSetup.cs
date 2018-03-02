@@ -26,6 +26,11 @@ namespace TCMManagement.BusinessLayer
                 .As<IEntityServices<TreatmentRecord>>()
                 .SingleInstance();
 
+            IEntityServices<Appointment> appointmentService = new AppointmentService();
+            builder.RegisterInstance(appointmentService)
+                .As<IEntityServices<AppointmentService>>()
+                .SingleInstance();
+
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             var container = builder.Build();
             var config = GlobalConfiguration.Configuration;

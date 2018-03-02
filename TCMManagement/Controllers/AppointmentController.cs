@@ -16,10 +16,6 @@ namespace TCMManagement.Controllers
     {
         private IEntityServices<Appointment> appointmentService;
 
-        public AppointmentController() {
-            appointmentService = new AppointmentService();
-        }
-
         public AppointmentController(IEntityServices<Appointment> service)
         {
             appointmentService = service;
@@ -30,7 +26,11 @@ namespace TCMManagement.Controllers
         [HttpPost]
         public IHttpActionResult AddAppointment(Appointment a)
         {
-            return Ok(appointmentService.CreateItem(a));
+            a.DateCreated = DateTime.Now;  
+            Appointment createdAppointment = appointmentService.CreateItem(a);
+            if (createdAppointment == null)
+                return Conflict();       // "This time is conflict with existed appointment."
+            return Ok(createdAppointment);
         }
 
         // querystring = "?person=1"
