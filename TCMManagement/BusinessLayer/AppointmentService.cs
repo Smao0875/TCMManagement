@@ -28,10 +28,8 @@ namespace TCMManagement.BusinessLayer
             foreach (var conflictAppointment in conflictList)
             {
                 // any time overlap will cause conflict
-                if ((conflictAppointment.TimeStart >= a.TimeStart && conflictAppointment.TimeStart <= a.TimeEnd)
-                 || (conflictAppointment.TimeEnd >= a.TimeStart && conflictAppointment.TimeEnd <= a.TimeEnd)
-                 || (a.TimeStart >= conflictAppointment.TimeStart && a.TimeStart <= conflictAppointment.TimeEnd)
-                 || (a.TimeEnd >= conflictAppointment.TimeStart && a.TimeEnd <= conflictAppointment.TimeEnd))
+                if ((conflictAppointment.TimeStart >= a.TimeStart && conflictAppointment.TimeStart < a.TimeEnd)
+                 || (conflictAppointment.TimeEnd > a.TimeStart && conflictAppointment.TimeEnd <= a.TimeEnd))
                 {
                     return null;
                 }
@@ -64,6 +62,13 @@ namespace TCMManagement.BusinessLayer
                     {
                         DateTime timeStart = DateTime.Parse(queryList[1].Value);
                         DateTime timeEnd = DateTime.Parse(queryList[2].Value);
+                        if (timeStart > timeEnd)
+                        {
+                            // make sure timeEnd >= timeStart
+                            DateTime tmp = timeStart;
+                            timeStart = timeEnd;
+                            timeEnd = timeStart;
+                        }
                         return context.Appointments
                                                 .Where(a => a.PersonId == id)
                                                 .Where(a => a.TimeStart >= timeStart)
@@ -87,20 +92,22 @@ namespace TCMManagement.BusinessLayer
         }
 
         // using Delta, but need namespace System.Web.Http.OData
-        public bool UpdateItem(int id, Delta<Appointment> a)
-        {
-            // We need to double check email duplication here.
-            Appointment appointmentToUpdate = GetItemById(id);
-
-            if (appointmentToUpdate == null)
+        /*
+            public bool UpdateItem(int id, Delta<Appointment> a)
             {
-                return false;
-            }
+                // We need to double check email duplication here.
+                Appointment appointmentToUpdate = GetItemById(id);
 
-            a.Patch(appointmentToUpdate);
-            SaveChanges();
-            return true;
-        }
+                if (appointmentToUpdate == null)
+                {
+                    return false;
+                }
+
+                a.Patch(appointmentToUpdate);
+                SaveChanges();
+                return true;
+            }
+        */
 
         public bool UpdateItem(int id, Appointment p)
         {

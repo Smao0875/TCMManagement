@@ -6,6 +6,7 @@ using System.Net.Http;
 using TCMManagement.BusinessLayer;
 using TCMManagement.Models;
 using static TCMManagement.BusinessLayer.Constants;
+using System.Web.Http.OData;
 
 namespace TCMManagement.Controllers
 {
@@ -15,6 +16,11 @@ namespace TCMManagement.Controllers
     public class AppointmentController : ApiController
     {
         private IEntityServices<Appointment> appointmentService;
+
+        public AppointmentController()
+        {
+            appointmentService = new AppointmentService();
+        }
 
         public AppointmentController(IEntityServices<Appointment> service)
         {
@@ -55,17 +61,30 @@ namespace TCMManagement.Controllers
         // Comment our for now, easier to test
         // [Authorize(Roles = "Receptionist")]
         [HttpPut]
-        public IHttpActionResult EditAppointment(int id, Appointment a)
+        public IHttpActionResult EditAppointment(int id, Delta<Appointment> a)
         {
-            if (appointmentService.UpdateItem(id, a))
-            {
-                return Ok(id);
-            }
-            else
+            return UpdateAppointment(id, a);
+        }
+
+        [AcceptVerbs("PATCH")]
+        public IHttpActionResult PatchAppointment(int id, Delta<Appointment> a)
+        {
+            return UpdateAppointment(id, a);
+        }
+
+        private IHttpActionResult UpdateAppointment(int id, Delta<Appointment> a)
+        {
+            // We need to double check email duplication here.
+            Appointment appointmentToUpdate = appointmentService.GetItemById(id);
+            if (appointmentToUpdate == null)
             {
                 return NotFound();
             }
-        }   
+
+            a.Patch(appointmentToUpdate);
+            appointmentService.SaveChanges();
+            return Ok(id);
+        }
 
         // [Authorize(Roles = "Receptionist")]
         [HttpDelete]
