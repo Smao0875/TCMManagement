@@ -17,10 +17,12 @@ namespace TCMManagement.Controllers
     {
         private IEntityServices<Appointment> appointmentService;
 
+        /*
         public AppointmentController()
         {
             appointmentService = new AppointmentService();
         }
+        */
 
         public AppointmentController(IEntityServices<Appointment> service)
         {
