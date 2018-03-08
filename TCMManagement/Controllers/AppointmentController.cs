@@ -21,7 +21,7 @@ namespace TCMManagement.Controllers
         {
             appointmentService = new AppointmentService();
         }
-
+        
         public AppointmentController(IEntityServices<Appointment> service)
         {
             appointmentService = service;

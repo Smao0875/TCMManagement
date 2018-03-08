@@ -18,6 +18,11 @@ namespace TCMManagement.BusinessLayer
             context = new TcmContext();
         }
 
+        public AppointmentService(TcmContext inputContext)
+        {
+            context = inputContext;
+        }
+
         // NOTE: We might need to check the validity of this appointment.
         public Appointment CreateItem(Appointment a)
         {
