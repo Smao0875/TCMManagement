@@ -22,15 +22,14 @@ namespace TCMManagement.Migrations
             );
 
             context.People.AddOrUpdate(x => x.PersonId,
-                new Person() { PersonId = 1, UserRoleId = 2, FirstName = "Practitioner", LastName = "1", DateCreated = DateTime.Now },
-                new Person() { PersonId = 2, UserRoleId = 2, FirstName = "Practitioner", LastName = "2", DateCreated = DateTime.Now },
-                new Person() { PersonId = 3, UserRoleId = 3, FirstName = "Receptionist", LastName = "1", DateCreated = DateTime.Now },
-                new Person() { PersonId = 4, UserRoleId = 4, FirstName = "Admin", LastName = "1" , Email = "email", DateCreated = DateTime.Now }
+                new Person() { PersonId = 1, UserRoleId = 2, FirstName = "John", LastName = "Doe", DateCreated = DateTime.Now },
+                new Person() { PersonId = 2, UserRoleId = 2, FirstName = "Zhang", LastName = "San", DateCreated = DateTime.Now },
+                new Person() { PersonId = 3, UserRoleId = 3, FirstName = "Li", LastName = "Si", DateCreated = DateTime.Now },
+                new Person() { PersonId = 4, UserRoleId = 4, FirstName = "Wang", LastName = "Wu" , Email = "email", DateCreated = DateTime.Now }
             );
 
             context.Patients.AddOrUpdate(x => x.PatientId,
-                new Patient() { PatientId = 1, Phone = "111", UserRoleId = 1, FirstName = "Patient01", LastName = "1",
-                                    Address = "address", DateCreated = DateTime.Now, DateOfBirth = DateTime.Now},
+                new Patient() { PatientId = 1, Phone = "5199999999", UserRoleId = 1, FirstName = "Patient01", LastName = "1", Address = "address", DateCreated = DateTime.Now, DateOfBirth = DateTime.Now},
                 new Patient()
                 {
                     PatientId = 2,
@@ -41,14 +40,51 @@ namespace TCMManagement.Migrations
                     Address = "address",
                     DateCreated = DateTime.Now,
                     DateOfBirth = DateTime.Now
+                },
+                new Patient()
+                {
+                    PatientId = 3,
+                    Phone = "111",
+                    UserRoleId = 1,
+                    FirstName = "Patient03",
+                    LastName = "1",
+                    Address = "address",
+                    DateCreated = DateTime.Now,
+                    DateOfBirth = DateTime.Now
+                },
+                new Patient()
+                {
+                    PatientId = 4,
+                    Phone = "111",
+                    UserRoleId = 1,
+                    FirstName = "Patient03",
+                    LastName = "1",
+                    Address = "address",
+                    DateCreated = DateTime.Now,
+                    DateOfBirth = DateTime.Now
+                },
+                new Patient()
+                {
+                    PatientId = 5,
+                    Phone = "111",
+                    UserRoleId = 1,
+                    FirstName = "Patient03",
+                    LastName = "1",
+                    Address = "address",
+                    DateCreated = DateTime.Now,
+                    DateOfBirth = DateTime.Now
                 }
             );
 
             context.Appointments.AddOrUpdate(
-                new Appointment() { AppointmentId = 1, PersonId = 1, PatientId = 1, Description = "Headache", DateCreated = DateTime.Now, TimeStart = DateTime.Now, TimeEnd = DateTime.Now },
-                new Appointment() { AppointmentId = 2, PersonId = 1, PatientId = 1, Description = "Foot pain", DateCreated = DateTime.Now, TimeStart = DateTime.Now, TimeEnd = DateTime.Now },
-                new Appointment() { AppointmentId = 3, PersonId = 2, PatientId = 2, Description = "Fire", DateCreated = DateTime.Now, TimeStart = DateTime.Now, TimeEnd = DateTime.Now },
-                new Appointment() { AppointmentId = 4, PersonId = 2, PatientId = 2, Description = "Water", DateCreated = DateTime.Now, TimeStart = DateTime.Now, TimeEnd = DateTime.Now }
+                new Appointment() { PersonId = 1, PatientId = 1, Description = "Headache", DateCreated = DateTime.Now, TimeStart = DateTime.Now, TimeEnd = DateTime.Now.AddHours(1) },
+                new Appointment() { PersonId = 1, PatientId = 1, Description = "Foot pain", DateCreated = DateTime.Now, TimeStart = DateTime.Now.AddHours(2), TimeEnd = DateTime.Now.AddHours(4) },
+                new Appointment() { PersonId = 1, PatientId = 2, Description = "Fire", DateCreated = DateTime.Now, TimeStart = DateTime.Now.AddHours(10), TimeEnd = DateTime.Now.AddHours(12) },
+                new Appointment() { PersonId = 1, PatientId = 2, Description = "Water", DateCreated = DateTime.Now, TimeStart = DateTime.Now.AddHours(14), TimeEnd = DateTime.Now.AddHours(17) },
+                new Appointment() { PersonId = 2, PatientId = 1, Description = "Practitioner2", DateCreated = DateTime.Now, TimeStart = DateTime.Now, TimeEnd = DateTime.Now.AddHours(1) },
+                new Appointment() { PersonId = 2, PatientId = 1, Description = "Practitioner2", DateCreated = DateTime.Now, TimeStart = DateTime.Now.AddHours(2), TimeEnd = DateTime.Now.AddHours(4) },
+                new Appointment() { PersonId = 2, PatientId = 2, Description = "Practitioner2", DateCreated = DateTime.Now, TimeStart = DateTime.Now.AddHours(10), TimeEnd = DateTime.Now.AddHours(12) },
+                new Appointment() { PersonId = 2, PatientId = 2, Description = "Practitioner2", DateCreated = DateTime.Now, TimeStart = DateTime.Now.AddHours(14), TimeEnd = DateTime.Now.AddHours(17) }
             );
 
             context.TreatmentRecords.AddOrUpdate(
