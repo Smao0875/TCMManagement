@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using static TCMManagement.BusinessLayer.Constants;
+using System.Web.Http.OData;
 
 namespace TCMManagement.BusinessLayer
 {
@@ -12,6 +13,7 @@ namespace TCMManagement.BusinessLayer
         T SearchItem(string s);
         IEnumerable<T> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams);
         bool UpdateItem(int id, T item);
+      //  bool UpdateItem(int id, Delta<T> item);
         bool DeleteItem(int id);
 
         int SaveChanges();

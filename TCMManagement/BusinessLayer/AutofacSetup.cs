@@ -25,12 +25,12 @@ namespace TCMManagement.BusinessLayer
             builder.RegisterInstance(treatmentRecordService)
                 .As<IEntityServices<TreatmentRecord>>()
                 .SingleInstance();
-
+/*
             IEntityServices<MedicalHistoryRecord> medicalRecordService = new MedicalRecordService();
             builder.RegisterInstance(medicalRecordService)
                 .As<IEntityServices<MedicalHistoryRecord>>()
                 .SingleInstance();
-
+*/
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             var container = builder.Build();
             var config = GlobalConfiguration.Configuration;
