@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using TCMManagement.BusinessLayer;
 using static TCMManagement.BusinessLayer.Constants;
 using TCMManagement.Models;
+using Microsoft.Owin.Security;
+using System.Collections.Generic;
 
 namespace TCMManagement
 {
@@ -33,8 +35,28 @@ namespace TCMManagement
                 identity.AddClaim(new Claim(ClaimTypes.Role, person.Role.Description));
                 identity.AddClaim(new Claim("username", person.Email));
                 identity.AddClaim(new Claim(ClaimTypes.Name, person.FirstName + " " + person.LastName));
-                context.Validated(identity);
+                var props = new AuthenticationProperties(new Dictionary<string, string>
+                                                        {
+                                                            {
+                                                                "role", person.Role.Description
+                                                            },
+                                                            {
+                                                                "id", person.PersonId.ToString()
+                                                            }
+                                                        });
+                var ticket = new AuthenticationTicket(identity, props);
+                context.Validated(ticket);
             }
+        }
+
+        public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+        {
+            foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
+            {
+                context.AdditionalResponseParameters.Add(property.Key, property.Value);
+            }
+
+            return Task.FromResult<object>(null);
         }
     }
 }

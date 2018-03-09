@@ -81,7 +81,7 @@ namespace TCMManagement.BusinessLayer
                     }
                 }
             }
-            return (new List<Appointment>());
+            return context.Appointments.ToList();
         }
        
 

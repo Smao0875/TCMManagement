@@ -74,6 +74,9 @@ namespace TCMManagement.BusinessLayer
 
         public int SaveChanges()
         {
+#if DEBUG
+            context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+#endif
             Utils.SoftDeleteEntry(context);
             return context.SaveChanges();
         }

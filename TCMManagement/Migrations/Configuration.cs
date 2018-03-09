@@ -22,10 +22,10 @@ namespace TCMManagement.Migrations
             );
 
             context.People.AddOrUpdate(x => x.PersonId,
-                new Person() { PersonId = 1, UserRoleId = 2, FirstName = "John", LastName = "Doe", DateCreated = DateTime.Now },
-                new Person() { PersonId = 2, UserRoleId = 2, FirstName = "Zhang", LastName = "San", DateCreated = DateTime.Now },
-                new Person() { PersonId = 3, UserRoleId = 3, FirstName = "Li", LastName = "Si", DateCreated = DateTime.Now },
-                new Person() { PersonId = 4, UserRoleId = 4, FirstName = "Wang", LastName = "Wu" , Email = "email", DateCreated = DateTime.Now }
+                new Person() { PersonId = 1, UserRoleId = 2, FirstName = "John", LastName = "Doe", Email = "p", Password = "p", DateCreated = DateTime.Now },
+                new Person() { PersonId = 2, UserRoleId = 2, FirstName = "Zhang", LastName = "San", Email = "p", Password = "p", DateCreated = DateTime.Now },
+                new Person() { PersonId = 3, UserRoleId = 3, FirstName = "Li", LastName = "Si", Email = "r", Password = "r", DateCreated = DateTime.Now },
+                new Person() { PersonId = 4, UserRoleId = 4, FirstName = "Wang", LastName = "Wu" , Email = "admin", Password = "admin", DateCreated = DateTime.Now }
             );
 
             context.Patients.AddOrUpdate(x => x.PatientId,
