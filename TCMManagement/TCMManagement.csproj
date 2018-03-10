@@ -214,12 +214,14 @@
     <Compile Include="BusinessLayer\Constants.cs" />
     <Compile Include="BusinessLayer\IEntityServices.cs" />
     <Compile Include="BusinessLayer\MedicalRecordService.cs" />
+    <Compile Include="BusinessLayer\PatientService.cs" />
     <Compile Include="BusinessLayer\PersonService.cs" />
     <Compile Include="BusinessLayer\TreatmentService.cs" />
     <Compile Include="BusinessLayer\Utils.cs" />
     <Compile Include="BusinessLayer\Validate.cs" />
     <Compile Include="Controllers\AppointmentController.cs" />
     <Compile Include="Controllers\MedicalRecordController.cs" />
+    <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\TreatmentRecordController.cs" />
     <Compile Include="DTOs\MedicalRecordCreation.cs" />
