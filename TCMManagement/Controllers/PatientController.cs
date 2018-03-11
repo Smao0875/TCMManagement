@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.OData;
 using TCMManagement.BusinessLayer;
+using TCMManagement.DTOs;
 using TCMManagement.ErrorHelper;
 using TCMManagement.Models;
 
@@ -28,7 +29,7 @@ namespace TCMManagement.Controllers
         // Comment our for now, easier to test
         //[Authorize(Roles = "admin")]
         [HttpPost]
-        public IHttpActionResult AddPatient(Patient p)
+        public IHttpActionResult AddPatient(PatientCreation p)
         {
             if (IsEmailExist(p.Email))
             {
