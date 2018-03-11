@@ -17,15 +17,12 @@ namespace TCMManagement.Controllers
     public class PatientController : ApiController
     {
         private readonly IEntityServices<Patient> patientService;
+        private readonly IMapper mapper;
 
-        public PatientController()
-        {
-            patientService = new PatientService();
-        }
-
-        public PatientController(IEntityServices<Patient> service)
+        public PatientController(IEntityServices<Patient> service, IMapper m)
         {
             patientService = service;
+            mapper = m;
         }
 
         // Comment our for now, easier to test
@@ -38,7 +35,7 @@ namespace TCMManagement.Controllers
                 return Conflict(); // "This email is already taken by others."
             }
             p.DateCreated = DateTime.Now;
-            return Ok(patientService.CreateItem(p));
+            return Ok(patientService.CreateItem(mapper.Map<Patient>(p)));
         }
 
         // querystring = "?type=practitioner"
