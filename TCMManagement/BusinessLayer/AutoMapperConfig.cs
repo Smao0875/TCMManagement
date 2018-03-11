@@ -23,6 +23,7 @@ namespace TCMManagement.BusinessLayer
         public PersonProfile()
         {
             CreateMap<PersonCreation, Person>(MemberList.Source);
+            CreateMap<PatientCreation, Patient>(MemberList.Source);
             CreateMap<TreatmentCreation, TreatmentRecord>(MemberList.Source);
             CreateMap<MedicalRecordCreation, MedicalHistoryRecord>(MemberList.Source);
         }

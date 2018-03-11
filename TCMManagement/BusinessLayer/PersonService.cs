@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using TCMManagement.Models;
@@ -24,9 +24,10 @@ namespace TCMManagement.BusinessLayer
         public IEnumerable<Person> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
             if(!Utils.IsNullOrEmpty(queryParams)){
+                string roleDescription = queryParams.First().Value;
                 return context.People
                             .Include(p => p.Role)
-                            .Where(e => e.Role.Description == queryParams.First().Value)
+                            .Where(e => e.Role.Description == roleDescription)
                             .ToList();
             }
             return context.People.Include(p => p.Role).ToList();
@@ -74,9 +75,6 @@ namespace TCMManagement.BusinessLayer
 
         public int SaveChanges()
         {
-#if DEBUG
-            context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
-#endif
             Utils.SoftDeleteEntry(context);
             return context.SaveChanges();
         }
