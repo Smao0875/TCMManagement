@@ -22,6 +22,7 @@ namespace TCMManagement.BusinessLayer
 
         public Patient CreateItem(Patient p)
         {
+            p.UserRoleId = 1;
             context.Patients.Add(p);
             SaveChanges();
             return context.Patients.ToList().Last();
