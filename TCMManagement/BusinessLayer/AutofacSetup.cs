@@ -21,6 +21,11 @@ namespace TCMManagement.BusinessLayer
                 .As<IEntityServices<Person>>()
                 .SingleInstance();
 
+            IEntityServices<Patient> patientService = new PatientService();
+            builder.RegisterInstance(patientService)
+                .As<IEntityServices<Patient>>()
+                .SingleInstance();
+
             IEntityServices<TreatmentRecord> treatmentRecordService = new TreatmentRecordService();
             builder.RegisterInstance(treatmentRecordService)
                 .As<IEntityServices<TreatmentRecord>>()
