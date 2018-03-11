@@ -31,23 +31,34 @@ namespace TCMManagement.BusinessLayer
         {
             if (!Utils.IsNullOrEmpty(queryParams))
             {
-                // only support get patient thru phone number, and firstname (1st) + lastname (2nd)
+                // only support get patient thru email, phone number, and firstname (1st) + lastname (2nd)
                 List<KeyValuePair<string, string>> queryList = queryParams.ToList();
-                if (queryParams.First().Key == "Phone")
+                if (queryParams.FirstOrDefault().Key == "Email")
                 {
-                    return context.Patients
-                            .Include(e => e.Appointments)
-                            .Include(e => e.TreatmentRecords)
-                            .Where(e => e.Phone == queryParams.First().Value)
-                            .ToList();
+                    return (new List<Patient>{SearchItem(queryParams.FirstOrDefault().Value)});
                 }
-                else if (queryList[0].Key == "FirstName" && queryList[1].Key == "LastName" )
+                if (queryParams.FirstOrDefault().Key == "Phone")
                 {
+                    // If I put queryParams.FirstOrDefault().Value to Where() directly, I will get exception
+                    string phoneNum = queryParams.FirstOrDefault().Value;
+                    if (queryParams.FirstOrDefault().Value != null)
+                    {
+                        return context.Patients
+                            .Include(e => e.Appointments)
+                            .Include(e => e.TreatmentRecords)
+                            .Where(e => e.Phone == phoneNum)
+                            .ToList();
+                    } 
+                }
+                if (queryList[0].Key == "FirstName" && queryList[1].Key == "LastName" )
+                {
+                    string firstName = queryList[0].Value;
+                    string lastName = queryList[1].Value;
                     return context.Patients
                             .Include(e => e.Appointments)
                             .Include(e => e.TreatmentRecords)
-                            .Where(e => e.FirstName == queryList[0].Value)
-                            .Where(e => e.LastName == queryList[1].Value)
+                            .Where(e => e.FirstName == firstName)
+                            .Where(e => e.LastName == lastName)
                             .ToList();
                 }
                 // the query is not accepable, return an empty list

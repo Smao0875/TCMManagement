@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -36,7 +37,7 @@ namespace TCMManagement.Controllers
             {
                 return Conflict(); // "This email is already taken by others."
             }
-
+            p.DateCreated = DateTime.Now;
             return Ok(patientService.CreateItem(p));
         }
 
@@ -44,7 +45,7 @@ namespace TCMManagement.Controllers
         [HttpGet]
         public IEnumerable<Patient> GetPatients()
         {
-            var keyValuePairs = ControllerContext.Request?.GetQueryNameValuePairs();
+            var keyValuePairs = ControllerContext.Request.GetQueryNameValuePairs();
             return patientService.GetItems(keyValuePairs);
         }
 
