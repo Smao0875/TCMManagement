@@ -16,9 +16,14 @@ namespace TCMManagement.BusinessLayer
 
         public Person CreateItem(Person p)
         {
-            context.People.Add(p);
-            SaveChanges();
-            return context.People.ToList().Last();
+            if (p.UserRoleId >= 2 && p.UserRoleId <= 4)
+            {
+                context.People.Add(p);
+                // only roleId == 2,3,4 is valid
+                SaveChanges();
+                return context.People.ToList().Last();
+            }
+            return null;
         }
 
         public IEnumerable<Person> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams = null)

@@ -33,8 +33,16 @@ namespace TCMManagement.Controllers
             {
                 return Conflict(); // "This email is already taken by others."
             }
-
-            return Ok(personService.CreateItem(mapper.Map<Person>(p)));
+            Person returnPerson = personService.CreateItem(mapper.Map<Person>(p));
+            if (returnPerson == null)
+            {
+                // userRoleId is invalid
+                return BadRequest(); 
+            }
+            else
+            {
+                return Ok(returnPerson);
+            }
         }
 
         // querystring = "?type=practitioner"
