@@ -239,6 +239,10 @@
     <Compile Include="Migrations\201802261703122_Initial.Designer.cs">
       <DependentUpon>201802261703122_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803141839227_change datetime to datetime2.cs" />
+    <Compile Include="Migrations\201803141839227_change datetime to datetime2.Designer.cs">
+      <DependentUpon>201803141839227_change datetime to datetime2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\MedicalHistoryRecord.cs" />
     <Compile Include="Models\TcmContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -271,6 +275,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201802261703122_Initial.resx">
       <DependentUpon>201802261703122_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803141839227_change datetime to datetime2.resx">
+      <DependentUpon>201803141839227_change datetime to datetime2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 
 namespace TCMManagement.Models
 {
@@ -25,6 +26,7 @@ namespace TCMManagement.Models
             modelBuilder.Entity<MedicalHistoryRecord>()
                         .Map(m => m.Requires("IsDeleted").HasValue(false))
                         .Ignore(m => m.IsDeleted);
+            modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
             base.OnModelCreating(modelBuilder);
         }
     }

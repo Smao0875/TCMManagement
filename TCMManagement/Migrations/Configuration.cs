@@ -29,7 +29,7 @@ namespace TCMManagement.Migrations
             );
 
             context.Patients.AddOrUpdate(x => x.PatientId,
-                new Patient() { PatientId = 1, Phone = "5199999999", UserRoleId = 1, FirstName = "Patient01", LastName = "1", Address = "address", DateCreated = DateTime.Now, DateOfBirth = DateTime.Now},
+                new Patient() { PatientId = 1, Phone = "5199999999", UserRoleId = 1, FirstName = "Patient01", LastName = "1", Gender = "female", Address = "address", DateCreated = DateTime.Now, DateOfBirth = DateTime.Now},
                 new Patient()
                 {
                     PatientId = 2,
@@ -37,6 +37,7 @@ namespace TCMManagement.Migrations
                     UserRoleId = 1,
                     FirstName = "Patient02",
                     LastName = "1",
+                    Gender= "male",
                     Address = "address",
                     DateCreated = DateTime.Now,
                     DateOfBirth = DateTime.Now

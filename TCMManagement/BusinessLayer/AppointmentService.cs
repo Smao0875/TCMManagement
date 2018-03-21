@@ -42,7 +42,7 @@ namespace TCMManagement.BusinessLayer
             // no conflict, add the appointment
             context.Appointments.Add(a);
             SaveChanges();
-            return context.Appointments.ToList().Last();
+            return context.Appointments.Include(ap => ap.Patient).ToList().Last();
         }
 
         public IEnumerable<Appointment> GetItems(IEnumerable<KeyValuePair<string, string>> queryParams = null)
@@ -54,14 +54,14 @@ namespace TCMManagement.BusinessLayer
 
                 if (isPatient)
                 {
-                    return context.Appointments.Where(a => a.PatientId == id).ToList();
+                    return context.Appointments.Where(a => a.PatientId == id).Include(a => a.Patient).ToList();
                 }
                 else
                 {
                     List<KeyValuePair<string, string>> queryList = queryParams.ToList();
                     if (queryList.Count() == 1)
                     {
-                        return context.Appointments.Where(a => a.PersonId == id).ToList();
+                        return context.Appointments.Where(a => a.PersonId == id).Include(a => a.Patient).ToList();
                     }
                     else
                     {
@@ -77,17 +77,18 @@ namespace TCMManagement.BusinessLayer
                         return context.Appointments
                                                 .Where(a => a.PersonId == id)
                                                 .Where(a => a.TimeStart >= timeStart)
-                                                .Where(a => a.TimeEnd <= timeEnd).ToList();
+                                                .Where(a => a.TimeEnd <= timeEnd)
+                                                .Include(a => a.Patient).ToList();
                     }
                 }
             }
-            return context.Appointments.ToList();
+            return context.Appointments.Include(a => a.Patient).ToList();
         }
        
 
         public Appointment GetItemById(int id)
         {
-            return context.Appointments.FirstOrDefault(a => a.AppointmentId == id);
+            return context.Appointments.Include(a => a.Patient).FirstOrDefault(a => a.AppointmentId == id);
         }
 
         // no need for appointment
