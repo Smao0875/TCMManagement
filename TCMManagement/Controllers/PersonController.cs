@@ -25,7 +25,7 @@ namespace TCMManagement.Controllers
         }
 
         // Comment our for now, easier to test
-        //[Authorize(Roles = "admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public IHttpActionResult AddPerson(PersonCreation p)
         {
@@ -65,20 +65,21 @@ namespace TCMManagement.Controllers
         }
 
         // Comment our for now, easier to test
-        // [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "Admin")]
         [HttpPut]
         public IHttpActionResult EditPerson(int id, Delta<Person> p)
         {
             return UpdatePerson(id, p);
         }
 
+        // [Authorize(Roles = "Admin")]
         [AcceptVerbs("PATCH")]
         public IHttpActionResult PatchPerson(int id, Delta<Person> p)
         {
             return UpdatePerson(id, p);
         }
 
-        //[Authorize(Roles = "admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpDelete]
         public IHttpActionResult DeletePerson(int id)
         {

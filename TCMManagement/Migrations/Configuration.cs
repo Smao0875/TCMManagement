@@ -18,7 +18,7 @@ namespace TCMManagement.Migrations
                 new UserRole() { UserRoleId = 1, Role = 1, Description = "Patient"},
                 new UserRole() { UserRoleId = 2, Role = 2, Description = "Practitioner"},
                 new UserRole() { UserRoleId = 3, Role = 3, Description = "Receptionist"},
-                new UserRole() { UserRoleId = 4, Role = 4, Description = "admin"}
+                new UserRole() { UserRoleId = 4, Role = 4, Description = "Admin"}
             );
 
             context.People.AddOrUpdate(x => x.PersonId,
@@ -62,7 +62,7 @@ namespace TCMManagement.Migrations
                     LastName = "1",
                     Address = "address",
                     DateCreated = DateTime.Now,
-                    DateOfBirth = DateTime.Now
+                    DateOfBirth = DateTime.Now.AddYears(-32)
                 },
                 new Patient()
                 {
@@ -73,7 +73,7 @@ namespace TCMManagement.Migrations
                     LastName = "1",
                     Address = "address",
                     DateCreated = DateTime.Now,
-                    DateOfBirth = DateTime.Now
+                    DateOfBirth = DateTime.Now.AddYears(-30)
                 }
             );
 
@@ -89,8 +89,8 @@ namespace TCMManagement.Migrations
             );
 
             context.TreatmentRecords.AddOrUpdate(
-                new TreatmentRecord() { TreatmentRecordId = 1, PersonId = 1, PatientId = 1, Diagnosis = "Too much fire", DateCreated = DateTime.Now},
-                new TreatmentRecord() { TreatmentRecordId = 1, PersonId = 2, PatientId = 2, Diagnosis = "Too much wood", DateCreated = DateTime.Now }
+                new TreatmentRecord() { TreatmentRecordId = 1, PersonId = 1, PatientId = 1, Diagnosis = "Too much fire", PaymentMethod = "Cash", TotalAmount = 100, AmountPaid = 100, DateCreated = DateTime.Now},
+                new TreatmentRecord() { TreatmentRecordId = 2, PersonId = 2, PatientId = 2, Diagnosis = "Too much wood", PaymentMethod = "WeChat", TotalAmount = 100, AmountPaid = 150, Change = 50, DateCreated = DateTime.Now }
             );
 
             context.MedicalHistoryRecords.AddOrUpdate(

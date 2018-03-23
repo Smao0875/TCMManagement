@@ -1,11 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using TCMManagement.Models;
-using System.Data.Entity;
-using static TCMManagement.BusinessLayer.Constants;
-using TCMManagement.BusinessLayer;
-using System;
-using System.Web.Http.OData;
 
 namespace TCMManagement.BusinessLayer
 {

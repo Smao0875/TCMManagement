@@ -12,5 +12,14 @@
             MedicalRecord,
             Treatment
         }
+
+        public enum PaymentMethod
+        {
+            Cash = 0,
+            Debit,
+            Credit,
+            ApplePay,
+            WeChat
+        }
     }
 }

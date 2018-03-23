@@ -1,14 +1,11 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
-using System.Net.Http;
-using TCMManagement.BusinessLayer;
-using TCMManagement.Models;
-using static TCMManagement.BusinessLayer.Constants;
 using AutoMapper;
-using TCMManagement.DTOs;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Web.Http;
 using System.Web.Http.OData;
-using System;
+using TCMManagement.BusinessLayer;
+using TCMManagement.DTOs;
+using TCMManagement.Models;
 
 namespace TCMManagement.Controllers
 {
@@ -61,6 +58,8 @@ namespace TCMManagement.Controllers
             return UpdateMedicalHistoryRecord(id, m);
         }
 
+        // Comment our for now, easier to test
+        // [Authorize(Roles = "Practitioner")]
         [AcceptVerbs("PATCH")]
         public IHttpActionResult PatchRecord(int id, Delta<MedicalHistoryRecord> m)
         {

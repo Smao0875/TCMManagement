@@ -27,7 +27,7 @@ namespace TCMManagement.Controllers
         }
 
         // Comment our for now, easier to test
-        //[Authorize(Roles = "admin")]
+        //[Authorize(Roles = "Receptionist")]
         [HttpPost]
         public IHttpActionResult AddPatient(PatientCreation p)
         {
@@ -53,26 +53,27 @@ namespace TCMManagement.Controllers
             var patient = patientService.GetItemById(id);
             if (patient == null)
             {
-                throw new ApiDataException(1001, "No product found for this id.", HttpStatusCode.NotFound);
+                throw new ApiDataException(1001, "No patient found for this id.", HttpStatusCode.NotFound);
             }
             return Ok(patient);
         }
 
         // Comment our for now, easier to test
-        // [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "Receptionist")]
         [HttpPut]
         public IHttpActionResult EditPatient(int id, Delta<Patient> p)
         {
             return UpdatePatient(id, p);
         }
 
+        // [Authorize(Roles = "Receptionist")]
         [AcceptVerbs("PATCH")]
         public IHttpActionResult PatchPatient(int id, Delta<Patient> p)
         {
             return UpdatePatient(id, p);
         }
 
-        //[Authorize(Roles = "admin")]
+        //[Authorize(Roles = "Receptionist")]
         [HttpDelete]
         public IHttpActionResult DeletePatient(int id)
         {

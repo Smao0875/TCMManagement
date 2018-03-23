@@ -42,6 +42,9 @@ namespace TCMManagement
                                                             },
                                                             {
                                                                 "id", person.PersonId.ToString()
+                                                            },
+                                                            {
+                                                                "name", person.FirstName + " " + person.LastName
                                                             }
                                                         });
                 var ticket = new AuthenticationTicket(identity, props);

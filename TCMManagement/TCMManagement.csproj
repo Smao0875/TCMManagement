@@ -243,6 +243,10 @@
     <Compile Include="Migrations\201803141839227_change datetime to datetime2.Designer.cs">
       <DependentUpon>201803141839227_change datetime to datetime2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803231457099_Merge Billing into Treatment.cs" />
+    <Compile Include="Migrations\201803231457099_Merge Billing into Treatment.Designer.cs">
+      <DependentUpon>201803231457099_Merge Billing into Treatment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\MedicalHistoryRecord.cs" />
     <Compile Include="Models\TcmContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -278,6 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803141839227_change datetime to datetime2.resx">
       <DependentUpon>201803141839227_change datetime to datetime2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803231457099_Merge Billing into Treatment.resx">
+      <DependentUpon>201803231457099_Merge Billing into Treatment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

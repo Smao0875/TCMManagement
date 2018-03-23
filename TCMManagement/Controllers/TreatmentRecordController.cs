@@ -24,7 +24,7 @@ namespace TCMManagement.Controllers
         }
 
         // Comment our for now, easier to test
-        // [Authorize(Roles = "Practitioner")]
+        // [Authorize(Roles = "Practitioner, Receptionist")]
         [HttpPost]
         public IHttpActionResult AddRecord(TreatmentCreation t)
         {
@@ -53,13 +53,15 @@ namespace TCMManagement.Controllers
         }
 
         // Comment our for now, easier to test
-        // [Authorize(Roles = "Practitioner")]
+        // [Authorize(Roles = "Practitioner, Receptionist")]
         [HttpPut]
         public IHttpActionResult EditRecord(int id, Delta<TreatmentRecord> t)
         {
             return UpdateTreatmentRecord(id, t);
         }
 
+        // Comment our for now, easier to test
+        // [Authorize(Roles = "Practitioner, Receptionist")]
         [AcceptVerbs("PATCH")]
         public IHttpActionResult PatchRecord(int id, Delta<TreatmentRecord> t)
         {
@@ -82,7 +84,7 @@ namespace TCMManagement.Controllers
         }
 
         // Need to change to softDelete
-        // [Authorize(Roles = "Practitioner")]
+        // [Authorize(Roles = "Practitioner, Receptionist")]
         [HttpDelete]
         public IHttpActionResult DeleteRecord(int id)
         {

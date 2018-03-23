@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
 using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.OData;
 using TCMManagement.BusinessLayer;
 using TCMManagement.Models;
-using static TCMManagement.BusinessLayer.Constants;
-using System.Web.Http.OData;
 
 namespace TCMManagement.Controllers
 {
@@ -66,6 +64,8 @@ namespace TCMManagement.Controllers
             return UpdateAppointment(id, a);
         }
 
+        // Comment our for now, easier to test
+        // [Authorize(Roles = "Receptionist")]
         [AcceptVerbs("PATCH")]
         public IHttpActionResult PatchAppointment(int id, Delta<Appointment> a)
         {
