@@ -25,7 +25,7 @@ namespace TCMManagement.BusinessLayer
         {
             // check the start time of the new appointment
             var conflictList = context.Appointments
-                                .Where(ea => ea.PatientId == a.PatientId || ea.PersonId == a.PersonId)
+                                .Where(ea => ea.PersonId == a.PersonId)
                                 .ToList();
             foreach (var conflictAppointment in conflictList)
             {
